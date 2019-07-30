@@ -1,0 +1,47 @@
+
+CREATE TABLE users(
+    id INT UNIQUE NOT NULL AUTO_INCREMENT,
+    password VARCHAR(120) NOT NULL , 
+    name VARCHAR(120) NOT NULL ,
+    email VARCHAR(120) UNIQUE  NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE tweets(
+    id INT UNIQUE NOT NULL AUTO_INCREMENT,
+    text VARCHAR(140 * 4) NOT NULL ,
+    image VARCHAR(140 * 4),
+    user_id INT,
+    reply_id INT,
+    PRIMARY KEY (id),
+    valid tinyint(1),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY fk_user(user_id) REFERENCES users(id)
+);
+
+//仕様メモ
+//reply_idがNULLの時は、リプライ元のツイートが無い。
+//validが1の時は有効、0の時は無効
+//リプライ元が無効でも、リプライは有効とする。
+//imageには画像ファイル名が入る。未入力のときは画像ファイルの送付がない。
+//画像はjpeg,jpg,pingのみ受付可能。ファイルサイズは2MBを限界とする。
+
+
+/lib
+    /Model
+        /User.php
+        /Tweet.php
+    /Controller
+        /Authentication.php
+            -サインアップ、ログイン、ログアウトを行う
+        /Tweet.php
+            -ツイート投稿、リプライ投稿、削除を行う
+    /View
+        /login.php
+        /home.php
+            -
+/public
+    /asset
+    /storage
+    /index.php
+        -HTTPヘッダのアドレスをパースして、ルーティングする
