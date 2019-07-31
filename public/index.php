@@ -4,6 +4,7 @@
 require '../core/Controller.php';
 require '../core/Response.php';
 require '../core/View.php';
+require '../core/Router.php';
 
 // controllersを読み込む
 require '../controllers/TestController.php';
