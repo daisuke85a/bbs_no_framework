@@ -7,7 +7,6 @@ require '../core/View.php';
 require '../core/Router.php';
 
 // controllersを読み込む
-require '../controllers/TestController.php';
 require '../controllers/HomeController.php';
 require '../controllers/LoginController.php';
 require '../controllers/PostController.php';
