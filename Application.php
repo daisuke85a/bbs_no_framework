@@ -17,6 +17,8 @@ class Application
             '/' => ['controller' => 'home', 'action' => 'welcome'],
             '/login' => ['controller' => 'login', 'action' => 'login'],
             '/logout' => ['controller' => 'login', 'action' => 'logout'],
+            '/signup' => ['controller' => 'login', 'action' => 'signupView'],
+            '/signup/create' => ['controller' => 'login', 'action' => 'signup'],
             '/post/create' => ['controller' => 'post', 'action' => 'create'],
             '/post/:id/delete' => ['controller' => 'post', 'action' => 'delete'],
             '/post/:id' => ['controller' => 'post', 'action' => 'show'],
@@ -76,8 +78,6 @@ class Application
                 }
             }
         }
-
-        var_dump($controller_class);
 
         return new $controller_class($this);
     }

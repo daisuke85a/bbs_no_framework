@@ -22,6 +22,25 @@ class LoginController extends Controller
             ],
             'Login.php'
         );
+    }
+    public function SignupAction(){
+        //TODO: サインアップ処理
+        return $this->render(
+            [ 'login' => 'TRUE',
+              'body' => 'default body'
+            ],
+            'Home.php'
+        );
+    }
 
+    public function SignupViewAction(){
+        //TODO: サインアップ画面表示処理
+
+        return $this->render(
+            [ 'login' => 'TRUE',
+              'body' => 'default body'
+            ],
+            'Signup.php'
+        );
     }
 }
