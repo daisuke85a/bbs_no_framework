@@ -8,6 +8,9 @@ require '../core/Router.php';
 
 // controllersを読み込む
 require '../controllers/TestController.php';
+require '../controllers/HomeController.php';
+require '../controllers/LoginController.php';
+require '../controllers/PostController.php';
 
 // modelsを読み込む
 

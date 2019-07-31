@@ -14,8 +14,13 @@ class Application
     protected function registerRoutes()
     {
         return [
-            '/' => ['controller' => 'test', 'action' => 'index'],
-            '/test' => ['controller' => 'test', 'action' => 'index'],
+            '/' => ['controller' => 'home', 'action' => 'welcome'],
+            '/login' => ['controller' => 'login', 'action' => 'login'],
+            '/logout' => ['controller' => 'login', 'action' => 'logout'],
+            '/post/create' => ['controller' => 'post', 'action' => 'create'],
+            '/post/:id/delete' => ['controller' => 'post', 'action' => 'delete'],
+            '/post/:id' => ['controller' => 'post', 'action' => 'show'],
+            '/test/:id' => ['controller' => 'test', 'action' => 'index'],
             '/test/:id' => ['controller' => 'test', 'action' => 'index'],
         ];
     }
@@ -46,6 +51,7 @@ class Application
 
         if ($controller === false) {
             // TODO B
+            throw new Exception("exception");
         }
 
         // Controllerクラスの $actionAction を $params を引数に実行する
