@@ -17,7 +17,7 @@ class Application
             '/login' => ['controller' => 'login', 'action' => 'login'],
             '/logout' => ['controller' => 'login', 'action' => 'logout'],
             '/signup' => ['controller' => 'login', 'action' => 'signupView'],
-            '/signup/create' => ['controller' => 'login', 'action' => 'signup'],
+            '/register' => ['controller' => 'login', 'action' => 'register'],
             '/post/create' => ['controller' => 'post', 'action' => 'create'],
             '/post/:id/delete' => ['controller' => 'post', 'action' => 'delete'],
             '/post/:id' => ['controller' => 'post', 'action' => 'show'],

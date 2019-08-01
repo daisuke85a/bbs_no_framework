@@ -23,8 +23,19 @@ class LoginController extends Controller
             'Login.php'
         );
     }
-    public function SignupAction(){
-        //TODO: サインアップ処理
+    public function registerAction(){
+        // TODO: ユーザー登録処理
+
+        // TODO: バリデーションする
+        $params = [
+            "name" => $_POST['name'],
+            "password" => $_POST['password'],
+            "email" => $_POST['email']
+        ];
+
+        $user = new User();
+        $user->insert($_POST['name'],$_POST['password'],$_POST['email']);
+
         return $this->render(
             [ 'login' => 'TRUE',
               'body' => 'default body'
@@ -33,7 +44,7 @@ class LoginController extends Controller
         );
     }
 
-    public function SignupViewAction(){
+    public function signupViewAction(){
         //TODO: サインアップ画面表示処理
 
         return $this->render(

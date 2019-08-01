@@ -1,6 +1,9 @@
 
 //本来はgit上にパスワード等の情報を載せるのはOUTだが、練習用なので今回はヨシ(๑•̀ㅂ•́)و✧とする
 
+mysql -u bbs_no_framework_user -p
+use bbs_no_framework;
+
 CREATE DATABASE bbs_no_framework CHARACTER SET utf8mb4;
 GRANT ALL PRIVILEGES ON bbs_no_framework.* TO 'bbs_no_framework_user'@'localhost' IDENTIFIED BY 'bbs_no_framework_user' WITH GRANT OPTION;
 
@@ -12,10 +15,10 @@ CREATE TABLE users(
     PRIMARY KEY (id)
 );
 
-CREATE TABLE tweets(
+CREATE TABLE posts(
     id INT UNIQUE NOT NULL AUTO_INCREMENT,
-    text VARCHAR(140 * 4) NOT NULL ,
-    image VARCHAR(140 * 4),
+    text VARCHAR(600) NOT NULL ,
+    image VARCHAR(600),
     user_id INT,
     reply_id INT,
     PRIMARY KEY (id),

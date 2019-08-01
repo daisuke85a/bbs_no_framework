@@ -16,6 +16,8 @@ require '../controllers/LoginController.php';
 require '../controllers/PostController.php';
 
 // modelsを読み込む
+require '../models/User.php';
+require '../models/Post.php';
 
 // viewsは読み込まない（表示するときだけ読み込む）
 require '../Application.php';
