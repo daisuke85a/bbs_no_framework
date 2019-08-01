@@ -1,14 +1,21 @@
 <?php
 
 class Response{
-    public $content;
-    public $status_code;
-    public $status_text;
+    static public $content;
+    static public $status_code = 200;
+    static public $status_text = 'OK';
+    static public $http_headers = [];
 
-    public function send(){
-        header('HTTP/1.1' . $this->status_code . ' ' . $this->status_text);
+    static public function send(){
+        // header — 生の HTTP ヘッダを送信する
+        header('HTTP/1.1' . self::$status_code . ' ' . self::$status_text);
 
-        echo $this->content;
+        foreach(self::$http_headers as $name => $value){
+            // header — 生の HTTP ヘッダを送信する
+            header($name . ': ' . $value);
+        }
+
+        echo self::$content;
     }
 
     

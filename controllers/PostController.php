@@ -17,11 +17,7 @@ class PostController extends Controller
     public function createAction(){
         //TODO: Post内容をDBへ投稿
 
-        return $this->render(
-            [ 'login' => 'TRUE',
-              'body' => 'default body',
-            ],
-            'Home.php'
-        );
+        return $this->redirect('/');
+
     }
 }

@@ -2,12 +2,10 @@
 
 class Application
 {
-    protected $response;
     protected $router;
 
     public function __construct()
     {
-        $this->response = new Response();
         $this->router = new Router($this->registerRoutes());
     }
 
@@ -57,9 +55,9 @@ class Application
         // Controllerクラスの $actionAction を $params を引数に実行する
         $content = $controller->run($action, $params);
 
-        $this->response->content = $content;
+        Response::$content = $content;
 
-        $this->response->send();
+        Response::send();
     }
 
     protected function findController($controller_class)
