@@ -1,4 +1,9 @@
 
+//本来はgit上にパスワード等の情報を載せるのはOUTだが、練習用なので今回はヨシ(๑•̀ㅂ•́)و✧とする
+
+CREATE DATABASE bbs_no_framework CHARACTER SET utf8mb4;
+GRANT ALL PRIVILEGES ON bbs_no_framework.* TO 'bbs_no_framework_user'@'localhost' IDENTIFIED BY 'bbs_no_framework_user' WITH GRANT OPTION;
+
 CREATE TABLE users(
     id INT UNIQUE NOT NULL AUTO_INCREMENT,
     password VARCHAR(120) NOT NULL , 

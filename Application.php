@@ -7,6 +7,7 @@ class Application
     public function __construct()
     {
         $this->router = new Router($this->registerRoutes());
+        DB::connect();
     }
 
     protected function registerRoutes()
