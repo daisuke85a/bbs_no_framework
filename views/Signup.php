@@ -1,3 +1,4 @@
+<?php var_dump($errors);?>
 <h2>サインアップ画面</h2>
 <form action="/register" method="POST">
     <input type="text" name="name" placeholder="名前を入力ください">
@@ -8,4 +9,4 @@
 
 <a href="/">ログイン画面へ</a>
 
-<?php echo($_SERVER['REQUEST_URI']); ?>
+<?php echo ($_SERVER['REQUEST_URI']); ?>

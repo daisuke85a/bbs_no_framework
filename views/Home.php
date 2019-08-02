@@ -6,6 +6,4 @@
     <input type="submit" value="投稿">
 </form>
 
-<p>login= <?php echo($login); ?> </p>
-<p>body= <?php echo($body); ?> </p>
-<?php echo($_SERVER['REQUEST_URI']); ?>
+<?php echo ($_SERVER['REQUEST_URI']); ?>
