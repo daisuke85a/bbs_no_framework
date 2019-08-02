@@ -29,7 +29,7 @@ class LoginController extends Controller
         );
     }
 
-    private function validateRegisterAction(): bool
+    private function validateRegister(): bool
     {
 
         $validation = true;
@@ -73,7 +73,7 @@ class LoginController extends Controller
     {
         // TODO: ユーザー登録処理
 
-        if ($this->validateRegisterAction()) {
+        if ($this->validateRegister()) {
 
             $user = new User();
             $user->insert($_POST['name'], $_POST['password'], $_POST['email']);
