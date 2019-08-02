@@ -13,18 +13,26 @@ class LoginController extends Controller
         //文字数制限チェックはしない。バレるといけないから。
 
         //ログイン処理
-        Auth::authenticate($_POST['email'], $_POST['password']);
+        if (Auth::authenticate($_POST['email'], $_POST['password'])) {
+            //ログイン成功したらHome画面へ遷移
+            return $this->render(
+                [],
+                'Home.php'
+            );
+        } else {
+            //ログイン失敗したらエラーメッセージとともにLogin画面を再表示
 
-        //ログイン成功したらHome画面へ遷移
+            return $this->render(
+                ["errors" => Auth::$errors],
+                'Login.php'
+            );
 
-        //ログイン失敗したらエラーメッセージとともにLogin画面を再表示
+            // return $this->render(
+            //     ["errors", Auth::$errors],
+            //     'Login.php'
+            // );
 
-        return $this->render(
-            ['login' => 'TRUE',
-                'body' => 'default body',
-            ],
-            'Home.php'
-        );
+        }
     }
 
     public function logoutAction()
@@ -32,9 +40,7 @@ class LoginController extends Controller
         //TODO: ログアウト処理
 
         return $this->render(
-            ['login' => 'TRUE',
-                'body' => 'default body',
-            ],
+            ["errors", []],
             'Login.php'
         );
     }

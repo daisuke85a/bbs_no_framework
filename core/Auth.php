@@ -23,11 +23,13 @@ class Auth
 
         //userが見つからなかったらエラーを返す
         if (empty($result)) {
+            Auth::$errors = ["login" => "ユーザーIDとパスワードの組み合わせが違います"];
             return false;
         }
 
         //パスワードによる認証を試みる
         if (!password_verify($password, $result['password'])) {
+            Auth::$errors = ["login" => "ユーザーIDとパスワードの組み合わせが違います"];
             return false;
         }
 
