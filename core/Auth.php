@@ -8,7 +8,7 @@ class Auth
     public static function authenticate(string $email, string $password): bool
     {
 
-        //emailに該当するuserを抽出する
+        //emailに該当するuserを抽出する(emailはUNIQUE)
         $stmt = DB::$connect->prepare(
             'SELECT id, name, password FROM users WHERE email = :email'
         );
