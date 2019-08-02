@@ -39,10 +39,12 @@ class LoginController extends Controller
             $this->errors['name'] = 'お名前が未入力です。入力をお願いします';
         }
 
-        if (empty($_POST['name']) ||
-            empty($_POST['password']) ||
-            empty($_POST['email'])) {
-            $this->errors["empty"] = "未入力項目があります。入力をお願いします";
+        if (empty($_POST['password'])) {
+            $this->errors['password'] = 'パスワードが未入力です。入力をお願いします';
+        }
+
+        if (empty($_POST['email'])) {
+            $this->errors['email'] = 'メールアドレスが未入力です。入力をお願いします';
         }
 
         //nameのバリデーション
@@ -51,17 +53,19 @@ class LoginController extends Controller
             $this->errors["name"] = "名前は30文字未満にしてください。";
         }
 
+        //emailのバリデーション
+        //30文字以上の場合はNG
+        if (mb_strlen($_POST['email'], mb_internal_encoding()) > 30) {
+            $this->errors["email"] = "メールアドレスは30文字未満にしてください。";
+        }
+
         //passwordのバリデーション
         //30文字以上の場合はNG
         if (mb_strlen($_POST['password'], mb_internal_encoding()) > 30) {
             $this->errors["password"] = "パスワードは30文字未満にしてください。";
         }
 
-        if (empty($this->errors)) {
-            return true;
-        } else {
-            return false;
-        }
+        return empty($this->errors);
 
     }
 
