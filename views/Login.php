@@ -3,7 +3,9 @@
 <?php
 if (!empty($errors)) {
     foreach ($errors as $key => $value) {
-        echo ("<li>$value</li>");
+        echo ("<li>");
+        $this->escapeEcho($value);
+        echo ("</li>");
     }
 }
 ?>

@@ -7,9 +7,15 @@ class View
     //
     protected $defaults;
 
-    public function __construct($base_dir, $defaults = []){
+    public function __construct($base_dir, $defaults = [])
+    {
         $this->base_dir = $base_dir;
         $this->defaults = $defaults;
+    }
+
+    public function escapeEcho($string)
+    {
+        echo (htmlspecialchars($string, ENT_QUOTES, 'UTF-8'));
     }
 
     public function render($view_file, $_variables = [])
@@ -35,7 +41,6 @@ class View
         //バッファの自動フラッシュを無効にし、最後にまとめて出力する
         ob_implicit_flush(0);
 
-
         //$_fileから出力される文字列をバッファに取得
         require $_file;
 
@@ -44,7 +49,4 @@ class View
         return $content;
     }
 
-    public function escape($string){
-        return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
-    }
 }
