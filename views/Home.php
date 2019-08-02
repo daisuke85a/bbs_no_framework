@@ -7,3 +7,4 @@
 </form>
 
 <?php echo ($_SERVER['REQUEST_URI']); ?>
+<?php var_dump($_SESSION['user']);?>

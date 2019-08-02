@@ -3,6 +3,7 @@
 class Auth
 {
     public static $errors = [];
+    private static $session_start = false;
 
     public static function authenticate(string $email, string $password): bool
     {
@@ -30,23 +31,34 @@ class Auth
             return false;
         }
 
+        //ログイン処理をする
         $user = new User();
         $user->id = $result['id'];
         $user->name = $result['name'];
         $user->email = $email;
 
-        //ログイン処理をする
-        //TODO::session_startが複数回呼ばれない工夫が必要？
-        session_start();
+        //session_startが複数回呼ばれないようにする
+        if (!Auth::$session_start) {
+            session_start();
+        }
+
         $_SESSION['user'] = $user;
 
-        var_dump($_SESSION['user']);
         return true;
     }
 
     public static function check(User $user = null): bool
     {
+        //session_startが複数回呼ばれないようにする
+        if (!Auth::$session_start) {
+            session_start();
+        }
 
+        if (!empty($_SESSION['user'])) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
