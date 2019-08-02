@@ -1,13 +1,14 @@
 <?php
 
-class User{
+class User
+{
 
     public $id;
-    private $password;
     public $name;
     public $email;
 
-    public function insert($name, $password, $email){
+    public function insert($name, $password, $email)
+    {
 
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
@@ -17,9 +18,9 @@ class User{
 
         $params =
             [':name' => $name,
-             ':password' => $password_hash,
-             ':email' => $email,
-            ];
+            ':password' => $password_hash,
+            ':email' => $email,
+        ];
 
         $stmt->execute($params);
 

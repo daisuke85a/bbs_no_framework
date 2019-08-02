@@ -9,6 +9,7 @@ require '../core/Response.php';
 require '../core/View.php';
 require '../core/Router.php';
 require '../core/DB.php';
+require '../core/Auth.php';
 
 // controllersを読み込む
 require '../controllers/HomeController.php';

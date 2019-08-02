@@ -9,6 +9,16 @@ class LoginController extends Controller
     {
         //TODO: ログイン処理
 
+        //入力バリデーションは未入力チェックだけする
+        //文字数制限チェックはしない。バレるといけないから。
+
+        //ログイン処理
+        Auth::authenticate($_POST['email'], $_POST['password']);
+
+        //ログイン成功したらHome画面へ遷移
+
+        //ログイン失敗したらエラーメッセージとともにLogin画面を再表示
+
         return $this->render(
             ['login' => 'TRUE',
                 'body' => 'default body',
