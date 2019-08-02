@@ -2,6 +2,9 @@
 
 class LoginController extends Controller
 {
+
+    private $errors = [];
+
     public function loginAction()
     {
         //TODO: ログイン処理
@@ -25,55 +28,54 @@ class LoginController extends Controller
             'Login.php'
         );
     }
+
+    private function validateRegisterAction(): bool
+    {
+
+        $validation = true;
+        $this->errors = [];
+
+        if (empty($_POST['name'])) {
+            $this->errors['name'] = 'お名前が未入力です。入力をお願いします';
+        }
+
+        if (empty($_POST['name']) ||
+            empty($_POST['password']) ||
+            empty($_POST['email'])) {
+            $this->errors["empty"] = "未入力項目があります。入力をお願いします";
+        }
+
+        //nameのバリデーション
+        //30文字以上の場合はNG
+        if (mb_strlen($_POST['name'], mb_internal_encoding()) > 30) {
+            $this->errors["name"] = "名前は30文字未満にしてください。";
+        }
+
+        //passwordのバリデーション
+        //30文字以上の場合はNG
+        if (mb_strlen($_POST['password'], mb_internal_encoding()) > 30) {
+            $this->errors["password"] = "パスワードは30文字未満にしてください。";
+        }
+
+        if (empty($this->errors)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     public function registerAction()
     {
         // TODO: ユーザー登録処理
 
-        // TODO: バリデーションする
-        $params = [
-            "name" => $_POST['name'],
-            "password" => $_POST['password'],
-            "email" => $_POST['email'],
-        ];
-
-        $validation = true;
-        $errors = [];
-
-        //全てが必須
-        if (!empty($_POST['name']) &&
-            !empty($_POST['password']) &&
-            !empty($_POST['email'])) {
-
-            //nameのバリデーション
-            //30文字以上の場合はNG
-            if (mb_strlen($_POST['name'], mb_internal_encoding()) > 30) {
-                $validation = false;
-            }
-
-            //passwordのバリデーション
-            //30文字以上の場合はNG
-            if (mb_strlen($_POST['password'], mb_internal_encoding()) > 30) {
-                $validation = false;
-            }
-
-            //emailのバリデーション
-            // if(){
-            //      $validation = false;
-            // }
-        }
-        //未入力項目が残っている場合
-        else {
-            $errors["empty"] = "未入力項目があります。入力をお願いします";
-            $validation = false;
-        }
-
-        if ($validation) {
+        if ($this->validateRegisterAction()) {
 
             $user = new User();
             $user->insert($_POST['name'], $_POST['password'], $_POST['email']);
 
             return $this->render(
-                ['errors' => $errors],
+                ['errors' => $this->errors],
                 'Home.php'
             );
         }
@@ -83,7 +85,7 @@ class LoginController extends Controller
         //$this->redirect('/signup');
 
         return $this->render(
-            ['errors' => $errors],
+            ['errors' => $this->errors],
             'Signup.php'
         );
 
