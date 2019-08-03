@@ -31,43 +31,26 @@ class Auth
     public static function authenticate(string $email, string $password): bool
     {
 
-        //emailに該当するuserを抽出する(emailはUNIQUE)
-        $stmt = DB::$connect->prepare(
-            'SELECT id, name, password FROM users WHERE email = :email'
-        );
-
-        $params =
-            [
-            ':email' => $email,
-        ];
-
-        $stmt->execute($params);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user = new User();
 
         //userが見つからなかったらエラーを返す
-        if (empty($result)) {
+        if (!$user->fetch($email)) {
             Auth::$errors = ["login" => "ユーザーIDとパスワードの組み合わせが違います"];
             return false;
         }
 
         //パスワードによる認証を試みる
-        if (!password_verify($password, $result['password'])) {
+        if (!password_verify($password, $user->password)) {
             Auth::$errors = ["login" => "ユーザーIDとパスワードの組み合わせが違います"];
             return false;
         }
 
         //ログイン処理をする
-        $user = new User();
-        $user->id = $result['id'];
-        $user->name = $result['name'];
-        $user->email = $email;
-
         //session_startが複数回呼ばれないようにする
         if (!Auth::$session_start) {
             session_start();
             Auth::$session_start = true;
         }
-
         $_SESSION['user'] = $user;
 
         return true;

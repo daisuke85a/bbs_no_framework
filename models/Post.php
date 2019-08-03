@@ -17,7 +17,11 @@ class Post
 
         $stmt->execute($params);
 
-        return $stmt;
+        return;
+    }
+
+    public function fetchAll()
+    {
 
     }
 }

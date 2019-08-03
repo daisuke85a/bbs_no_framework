@@ -6,7 +6,10 @@ class HomeController extends Controller
     {
         //TODO: ログイン中ならホームを表示。未ログインならログイン画面を表示
 
+        //ログイン中
         if (Auth::check()) {
+            //全投稿を表示
+
             return $this->render(
                 [],
                 'Home.php'

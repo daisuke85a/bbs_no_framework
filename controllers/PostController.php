@@ -4,7 +4,7 @@ class PostController extends Controller
 {
     public function showAction($id)
     {
-        //TODO: Post内容の取得
+        //TODO: 投稿表示処理の追加
 
         return $this->render(
             ['login' => 'TRUE',
@@ -17,7 +17,7 @@ class PostController extends Controller
 
     public function createAction()
     {
-        //TODO: Post内容をDBへ投稿
+        //TODO: バリデーション処理を追加
 
         $post = new Post();
         var_dump($_POST);
