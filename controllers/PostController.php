@@ -54,19 +54,13 @@ class PostController extends Controller
             $post = $post->fetch($params['id']);
 
             //自分のツイートの場合は削除できる
-            var_dump("post user_id");
-            var_dump($post["user_id"]);
-            var_dump("auth user_id");
-
-            var_dump(Auth::user()->id);
-
             if ($post["user_id"] === Auth::user()->id) {
                 $post = new Post();
                 $post->delete($params['id']);
-            } else {
-                var_dump("otehr user tweet");
             }
-            //詳細画面を表示する
+
+            //ホーム画面を表示する
+            return $this->redirect('/');
         }
     }
 }

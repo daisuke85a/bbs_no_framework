@@ -95,6 +95,14 @@ class Post
         var_dump("delete");
         var_dump($id);
 
+        $stmt = DB::$connect->prepare(
+            'UPDATE posts SET valid = 0 WHERE id = :id'
+        );
+
+        $params =
+            [':id' => $id];
+
+        $stmt->execute($params);
         return true;
     }
 
