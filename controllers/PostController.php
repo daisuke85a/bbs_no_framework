@@ -32,19 +32,41 @@ class PostController extends Controller
 
     public function createAction()
     {
-        //TODO: バリデーション処理を追加
 
-        $post = new Post();
-        $post->insert($_POST["text"]);
+        //ログイン中
+        if (Auth::check()) {
+            //TODO: バリデーション処理を追加
 
+            $post = new Post();
+            $post->insert($_POST["text"]);
+        }
         return $this->redirect('/');
 
     }
 
-    public function deleteAction($id)
+    public function deleteAction($params)
     {
+        //ログイン中
+        if (Auth::check()) {
+            var_dump($params['id']);
 
-        var_dump($id['id']);
+            $post = new Post();
+            $post = $post->fetch($params['id']);
 
+            //自分のツイートの場合は削除できる
+            var_dump("post user_id");
+            var_dump($post["user_id"]);
+            var_dump("auth user_id");
+
+            var_dump(Auth::user()->id);
+
+            if ($post["user_id"] === Auth::user()->id) {
+                $post = new Post();
+                $post->delete($params['id']);
+            } else {
+                var_dump("otehr user tweet");
+            }
+            //詳細画面を表示する
+        }
     }
 }

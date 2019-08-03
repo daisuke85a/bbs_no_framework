@@ -90,4 +90,12 @@ class Post
 
     }
 
+    public function delete($id): bool
+    {
+        var_dump("delete");
+        var_dump($id);
+
+        return true;
+    }
+
 }
