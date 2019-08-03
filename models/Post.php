@@ -20,8 +20,16 @@ class Post
         return;
     }
 
-    public function fetchAll()
+    public function fetchAll(): array
     {
+        //emailに該当するuserを抽出する(emailはUNIQUE)
+        $stmt = DB::$connect->prepare(
+            'SELECT * FROM posts'
+        );
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
+
 }

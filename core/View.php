@@ -13,7 +13,7 @@ class View
         $this->defaults = $defaults;
     }
 
-    public function escapeEcho($string)
+    public function escapeEcho(string $string)
     {
         echo (htmlspecialchars($string, ENT_QUOTES, 'UTF-8'));
     }
