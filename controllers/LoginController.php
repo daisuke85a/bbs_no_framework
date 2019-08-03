@@ -39,6 +39,8 @@ class LoginController extends Controller
     {
         //TODO: ログアウト処理
 
+        Auth::releaseAuthenticate();
+
         return $this->render(
             ["errors", []],
             'Login.php'
