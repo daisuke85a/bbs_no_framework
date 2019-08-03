@@ -8,16 +8,23 @@ class PostController extends Controller
         if (Auth::check()) {
             //全投稿を表示
             $post = new Post();
-            $replyPosts = $post->fetchReplay($params['id']);
             $post = $post->fetch($params['id']);
 
-            return $this->render(
-                ['posts' => $replyPosts,
-                    'post' => $post,
-                    'postId' => $params['id'],
-                ],
-                'ShowPost.php'
-            );
+            if ($post['valid'] == 1) {
+                $replyPosts = new Post();
+                $replyPosts = $replyPosts->fetchReplay($params['id']);
+
+                return $this->render(
+                    ['posts' => $replyPosts,
+                        'post' => $post,
+                        'postId' => $params['id'],
+                    ],
+                    'ShowPost.php'
+                );
+            } else {
+                // 削除済みのツイートです みたいな表示にするのも有りかも
+                return $this->redirect('/');
+            }
         } else {
             return $this->render(
                 ['login' => 'TRUE',
@@ -25,8 +32,6 @@ class PostController extends Controller
                 'Login.php'
             );
         }
-
-        //TODO: 投稿表示処理の追加
 
     }
 

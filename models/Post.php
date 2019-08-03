@@ -47,7 +47,7 @@ class Post
         //TODO: 投稿が増えると処理やメモリに時間がかかる。本来は細切れに取得するのが望ましい。
         $stmt = DB::$connect->prepare(
             'SELECT *, posts.id AS post_id FROM posts INNER JOIN users
-        ON posts.user_id = users.id;'
+        ON posts.user_id = users.id WHERE posts.valid = 1'
         );
 
         $stmt->execute();
@@ -60,7 +60,7 @@ class Post
         //emailに該当するuserを抽出する(emailはUNIQUE)
         $stmt = DB::$connect->prepare(
             'SELECT *, posts.id AS post_id FROM posts INNER JOIN users
-        ON posts.user_id = users.id WHERE posts.id = :postId'
+        ON posts.user_id = users.id WHERE posts.id = :postId AND posts.valid = 1'
         );
 
         $params =
@@ -79,7 +79,7 @@ class Post
         //TODO: 投稿が増えると処理やメモリに時間がかかる。本来は細切れに取得するのが望ましい。
         $stmt = DB::$connect->prepare(
             'SELECT *, posts.id AS post_id FROM posts INNER JOIN users
-                ON posts.user_id = users.id WHERE posts.reply_id = :postId'
+                ON posts.user_id = users.id WHERE posts.reply_id = :postId AND posts.valid = 1'
         );
 
         $params =
