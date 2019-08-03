@@ -29,9 +29,6 @@ foreach ($posts as $post => $value) {
     $this->escapeEcho($value["name"]);
     echo ('</td>');
     echo ('<td>');
-    $this->escapeEcho($value["name"]);
-    echo ('</td>');
-    echo ('<td>');
     $this->escapeEcho($value["created_at"]);
     echo ('</td>');
     echo ('<tr>');
