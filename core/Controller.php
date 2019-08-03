@@ -12,13 +12,14 @@ abstract class Controller
         $this->controller_name = strtolower(substr(get_class($this), 0, -10));
     }
 
-    public function run($action, $params = []){
+    public function run($action, $params = [])
+    {
 
         $this->action_name = $action;
 
         $action_method = $action . 'Action';
 
-        if(!method_exists($this, $action_method)){
+        if (!method_exists($this, $action_method)) {
             $this->forward404();
         }
 
@@ -27,13 +28,14 @@ abstract class Controller
         return $content;
     }
 
-    protected function render($variables = [], $view_file , $template = null ){
-        
+    protected function render($variables = [], $view_file, $template = null)
+    {
+
         $defaults =
-         [ 
-        //    'base_url' => $this->request->getBaseUrl(),
-        //    'session'  => $this->session,
-         ];
+            [
+            //    'base_url' => $this->request->getBaseUrl(),
+            //    'session'  => $this->session,
+        ];
 
         $view = new View($defaults);
 

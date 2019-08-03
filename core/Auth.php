@@ -10,10 +10,22 @@ class Auth
         //session_startが複数回呼ばれないようにする
         if (!Auth::$session_start) {
             session_start();
+            Auth::$session_start = true;
         }
 
         // $_SESSION['user'] = null;
         unset($_SESSION['user']);
+    }
+
+    public static function user(): User
+    {
+        //session_startが複数回呼ばれないようにする
+        if (!Auth::$session_start) {
+            session_start();
+            Auth::$session_start = true;
+        }
+
+        return $_SESSION['user'];
     }
 
     public static function authenticate(string $email, string $password): bool
@@ -53,6 +65,7 @@ class Auth
         //session_startが複数回呼ばれないようにする
         if (!Auth::$session_start) {
             session_start();
+            Auth::$session_start = true;
         }
 
         $_SESSION['user'] = $user;
@@ -65,6 +78,8 @@ class Auth
         //session_startが複数回呼ばれないようにする
         if (!Auth::$session_start) {
             session_start();
+            Auth::$session_start = true;
+
         }
 
         if (!empty($_SESSION['user'])) {
