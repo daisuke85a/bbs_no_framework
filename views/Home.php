@@ -3,10 +3,13 @@
 <h3>なまえ</h3>
 <p><?php $this->escapeEcho(Auth::user()->name);?></p>
 
-<form action="/post/create" method="post">
+<form action="/post/create" method="post" enctype="multipart/form-data">
     <input type="text" name="text" id="text" placeholder="投稿用のテキストを140文字以内で書いてください" value="">
+    <!-- <input type="hidden" name="MAX_FILE_SIZE" value="30000" /> -->
+    <input type="file" id="image" name="image">
     <input type="submit" value="投稿">
 </form>
+
 
 <?php
 echo ('<table>');
