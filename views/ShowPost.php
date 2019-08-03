@@ -2,6 +2,33 @@
 
 <h3>投稿表示</h3>
 
+<?php
+
+echo ('<table>');
+echo ('<tr><th>投稿</th><th>画像</th><th>なまえ</th><th>日時</th></tr>');
+
+echo '<tr>';
+echo '<td>';
+$this->escapeEcho($post["text"]);
+echo '</td>';
+echo '<td>';
+
+if (!empty($post["image"])) {
+    echo '<img src="/upload/' . $post["image"] . '" alt="NoImage" width="100px" height="100px" >';
+}
+echo '</td>';
+echo '<td>';
+$this->escapeEcho($post["name"]);
+echo '</td>';
+echo '<td>';
+$this->escapeEcho($post["created_at"]);
+echo '</td>';
+echo '<td><a href="/post/' . $post["post_id"] . '">詳細表示';
+echo '</a></td>';
+echo '<tr>';
+
+echo '</table>';
+?>
 
 <h3>リプライする</h3>
 <form action="/post/create" method="post" enctype="multipart/form-data">
@@ -43,3 +70,5 @@ foreach ($posts as $post => $value) {
     echo '<tr>';
 }
 echo '</table>';
+
+?>

@@ -55,6 +55,24 @@ class Post
 
     }
 
+    public function fetch($postId)
+    {
+        //emailに該当するuserを抽出する(emailはUNIQUE)
+        $stmt = DB::$connect->prepare(
+            'SELECT *, posts.id AS post_id FROM posts INNER JOIN users
+        ON posts.user_id = users.id WHERE posts.id = :postId'
+        );
+
+        $params =
+            [
+            ':postId' => $postId,
+        ];
+
+        $stmt->execute($params);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+    }
+
     public function fetchReplay($postId): array
     {
         //ある投稿のリプライを全て取得する

@@ -5,14 +5,15 @@ class PostController extends Controller
     public function showAction($params)
     {
         //ログイン中
-        var_dump($params['id']);
         if (Auth::check()) {
             //全投稿を表示
             $post = new Post();
             $replyPosts = $post->fetchReplay($params['id']);
+            $post = $post->fetch($params['id']);
 
             return $this->render(
                 ['posts' => $replyPosts,
+                    'post' => $post,
                     'postId' => $params['id'],
                 ],
                 'ShowPost.php'
