@@ -10,11 +10,14 @@
 
 <?php
 echo ('<table>');
-echo ('<tr><th>投稿</th><th>日時</th></tr>');
+echo ('<tr><th>投稿</th><th>なまえ</th><th>日時</th></tr>');
 foreach ($posts as $post => $value) {
     echo ('<tr>');
     echo ('<td>');
     $this->escapeEcho($value["text"]);
+    echo ('</td>');
+    echo ('<td>');
+    $this->escapeEcho($value["name"]);
     echo ('</td>');
     echo ('<td>');
     $this->escapeEcho($value["created_at"]);

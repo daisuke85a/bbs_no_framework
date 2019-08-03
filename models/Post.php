@@ -24,7 +24,8 @@ class Post
     {
         //emailに該当するuserを抽出する(emailはUNIQUE)
         $stmt = DB::$connect->prepare(
-            'SELECT * FROM posts'
+            'SELECT * FROM posts INNER JOIN users
+        ON posts.user_id = users.id;'
         );
 
         $stmt->execute();
