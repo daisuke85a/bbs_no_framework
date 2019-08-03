@@ -2,17 +2,31 @@
 
 class PostController extends Controller
 {
-    public function showAction($id)
+    public function showAction($params)
     {
+        //ログイン中
+        var_dump($params['id']);
+        if (Auth::check()) {
+            //全投稿を表示
+            $post = new Post();
+            $replyPosts = $post->fetchReplay($params['id']);
+
+            return $this->render(
+                ['posts' => $replyPosts,
+                    'postId' => $params['id'],
+                ],
+                'ShowPost.php'
+            );
+        } else {
+            return $this->render(
+                ['login' => 'TRUE',
+                ],
+                'Login.php'
+            );
+        }
+
         //TODO: 投稿表示処理の追加
 
-        return $this->render(
-            ['login' => 'TRUE',
-                'body' => 'default body',
-                'postId' => $id,
-            ],
-            'ShowPost.php'
-        );
     }
 
     public function createAction()
@@ -23,6 +37,13 @@ class PostController extends Controller
         $post->insert($_POST["text"]);
 
         return $this->redirect('/');
+
+    }
+
+    public function deleteAction($id)
+    {
+
+        var_dump($id['id']);
 
     }
 }

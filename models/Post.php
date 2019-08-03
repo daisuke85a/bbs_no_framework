@@ -43,13 +43,31 @@ class Post
 
     public function fetchAll(): array
     {
-        //emailに該当するuserを抽出する(emailはUNIQUE)
+        //全ての投稿を取得する
+        //TODO: 投稿が増えると処理やメモリに時間がかかる。本来は細切れに取得するのが望ましい。
         $stmt = DB::$connect->prepare(
-            'SELECT * FROM posts INNER JOIN users
+            'SELECT *, posts.id AS post_id FROM posts INNER JOIN users
         ON posts.user_id = users.id;'
         );
 
         $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    public function fetchReplay($postId): array
+    {
+        //ある投稿のリプライを全て取得する
+        //TODO: 投稿が増えると処理やメモリに時間がかかる。本来は細切れに取得するのが望ましい。
+        $stmt = DB::$connect->prepare(
+            'SELECT *, posts.id AS post_id FROM posts INNER JOIN users
+                ON posts.user_id = users.id WHERE posts.reply_id = :postId'
+        );
+
+        $params =
+            [':postId' => $postId];
+
+        $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
