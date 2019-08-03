@@ -5,20 +5,19 @@ class LoginController extends Controller
 
     private $errors = [];
 
-    public function loginAction()
+    public function login(string $email, string $password)
     {
-        //TODO: ログイン処理
-
-        //入力バリデーションは未入力チェックだけする
-        //文字数制限チェックはしない。バレるといけないから。
-
         //ログイン処理
-        if (Auth::authenticate($_POST['email'], $_POST['password'])) {
-            //ログイン成功したらHome画面へ遷移
+        if (Auth::authenticate($email, $password)) {
+            //全投稿を表示
+            $post = new Post();
+            $posts = $post->fetchAll();
+
             return $this->render(
-                [],
+                ['posts' => $posts],
                 'Home.php'
             );
+
         } else {
             //ログイン失敗したらエラーメッセージとともにLogin画面を再表示
 
@@ -33,6 +32,17 @@ class LoginController extends Controller
             // );
 
         }
+
+    }
+
+    public function loginAction()
+    {
+        //TODO: ログイン処理
+        return $this->login($_POST['email'], $_POST['password']);
+
+        //入力バリデーションは未入力チェックだけする
+        //文字数制限チェックはしない。バレるといけないから。
+
     }
 
     public function logoutAction()
@@ -96,10 +106,12 @@ class LoginController extends Controller
             $user = new User();
             $user->insert($_POST['name'], $_POST['password'], $_POST['email']);
 
-            return $this->render(
-                ['errors' => $this->errors],
-                'Home.php'
-            );
+            return $this->login($_POST['email'], $_POST['password']);
+
+            // return $this->render(
+            //     ['errors' => $this->errors],
+            //     'Home.php'
+            // );
         }
 
         //TODO: エラー発生時にアドレスバーがregisterになってしまうのがかっこ悪い。
