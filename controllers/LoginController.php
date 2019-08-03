@@ -13,10 +13,12 @@ class LoginController extends Controller
             $post = new Post();
             $posts = $post->fetchAll();
 
-            return $this->render(
-                ['posts' => $posts],
-                'Home.php'
-            );
+            return $this->redirect("/");
+
+            // return $this->render(
+            //     ['posts' => $posts],
+            //     'Home.php'
+            // );
 
         } else {
             //ログイン失敗したらエラーメッセージとともにLogin画面を再表示
