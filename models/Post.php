@@ -31,7 +31,7 @@ class Post
         $params =
             [':text' => $text,
             ':user_id' => Auth::user()->id,
-            ':reply_id' => $reply_id,
+            ':reply_id' => $_POST["reply_id"],
             ':image' => $image,
             ':valid' => true,
         ];
