@@ -13,11 +13,20 @@
 
 <?php
 echo ('<table>');
-echo ('<tr><th>投稿</th><th>なまえ</th><th>日時</th></tr>');
+echo ('<tr><th>投稿</th><th>画像</th><th>なまえ</th><th>日時</th></tr>');
 foreach ($posts as $post => $value) {
     echo ('<tr>');
     echo ('<td>');
     $this->escapeEcho($value["text"]);
+    echo ('</td>');
+    echo ('<td>');
+
+    if (!empty($value["image"])) {
+        echo '<img src="/upload/' . $value["image"] . '" alt="NoImage" width="100px" height="100px" >';
+    }
+    echo ('</td>');
+    echo ('<td>');
+    $this->escapeEcho($value["name"]);
     echo ('</td>');
     echo ('<td>');
     $this->escapeEcho($value["name"]);

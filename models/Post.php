@@ -3,11 +3,6 @@ class Post
 {
     public function insert($text, $reply_id = null, $image = null)
     {
-
-        var_dump($_FILES['image']['tmp_name']);
-        var_dump($_FILES['image']['name']);
-        var_dump(basename($_FILES['image']['name']));
-
         $uploadDir = $_SERVER["DOCUMENT_ROOT"] . '/upload/';
         $uploadFileBaseName = basename($_FILES['image']['name']);
         $uploadFile = $uploadDir . $uploadFileBaseName;
@@ -18,6 +13,9 @@ class Post
         // 有効なアップロードファイルであるかどうかを確認します。
         // そのファイルが有効な場合、destination で指定したファイル名に移動されます。
         // TODO:ファイル名をUNIQUEな文字列に変更する。同名ファイルがアップされたときの上書きを防ぐ
+
+        // PHPによって格納された一時ファイル保存先($_FILES['image']['tmp_name'])から、本ファイル保存先に移動する。
+
         if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
             $uploadSuccess = true;
             $image = $uploadFileBaseName;

@@ -20,7 +20,6 @@ class PostController extends Controller
         //TODO: バリデーション処理を追加
 
         $post = new Post();
-        var_dump($_POST);
         $post->insert($_POST["text"]);
 
         return $this->redirect('/');
