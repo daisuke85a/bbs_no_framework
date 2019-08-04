@@ -10,6 +10,7 @@ require '../core/View.php';
 require '../core/Router.php';
 require '../core/DB.php';
 require '../core/Auth.php';
+require '../core/CsrfToken.php';
 
 // controllersを読み込む
 require '../controllers/HomeController.php';

@@ -8,6 +8,7 @@ class Application
     {
         $this->router = new Router($this->registerRoutes());
         DB::connect();
+        session_start();
         error_reporting(-1);
         ini_set('display_errors' , 'On');
     }

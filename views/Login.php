@@ -11,6 +11,7 @@ if (!empty($errors)) {
 ?>
 
 <form action="/login" method="POST">
+    <input type="hidden" name="_token" value="<?=CsrfToken::publication()?>">
     <input type="email" name="email" placeholder="emailアドレスを入力ください">
     <input type="password" name="password" placeholder="パスワードを入力ください">
     <input type="submit" value="ログイン">

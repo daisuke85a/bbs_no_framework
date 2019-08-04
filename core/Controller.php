@@ -23,6 +23,13 @@ abstract class Controller
             $this->forward404();
         }
 
+        //ポストリクエストの場合は必ずCsrfTokenが含まれているものとする
+        if ($_SERVER["REQUEST_METHOD"] === 'POST') {
+            if (CsrfToken::check() === false) {
+                $this->forward404();
+            }
+        }
+
         $content = $this->$action_method($params);
 
         return $content;
