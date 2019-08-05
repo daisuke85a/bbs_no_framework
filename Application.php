@@ -10,7 +10,7 @@ class Application
         DB::connect();
         session_start();
         error_reporting(-1);
-        ini_set('display_errors' , 'On');
+        ini_set('display_errors', 'On');
     }
 
     protected function registerRoutes()
@@ -62,6 +62,8 @@ class Application
         Response::$content = $content;
 
         Response::send();
+
+        Message::sendRequestFlush();
     }
 
     protected function findController($controller_class)

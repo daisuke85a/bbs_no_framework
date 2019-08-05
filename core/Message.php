@@ -2,7 +2,7 @@
 
 class Message
 {
-    private $life = 1;
+    private $life = 2;
     private $str = "";
 
     function isset(string $key): bool {
@@ -24,12 +24,28 @@ class Message
 
         $_SESSION['_msg'] += [$key => $MsgInstance];
 
-        var_dump($_SESSION['_msg']);
-        var_dump($_SESSION['_msg']["key2"]);
-        var_dump($MsgInstance->isset("key2"));
-        var_dump($MsgInstance->isset("key3"));
+    }
 
-        // $Message = new Message($str);
-        // $_SESSION['_msg'][] = $Message;
+    // メッセージをセットした後の、次のリクエストに対するResponseをしたあとで、クリアする
+    public static function sendRequestFlush()
+    {
+
+        foreach ($_SESSION['_msg'] as $key => $msg) {
+            //Messageオブジェクト以外の場合はunsetする
+            if (gettype($msg) === "object") {
+                if (get_class($msg) !== 'Message') {
+                    unset($_SESSION['_msg'][$key]);
+                    continue;
+                }
+            } else {
+                unset($_SESSION['_msg'][$key]);
+                continue;
+            }
+            $msg->life--;
+            if ($msg->life === 0) {
+                unset($_SESSION['_msg'][$key]);
+            }
+        }
+
     }
 }

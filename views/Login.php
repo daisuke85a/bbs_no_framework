@@ -1,11 +1,6 @@
 <h2>ログイン画面</h2>
 
 <?php
-new Message("key2", "test");
-Message::set("key5", "test5");
-?>
-
-<?php
 if (!empty($errors)) {
     foreach ($errors as $key => $value) {
         echo ("<li>");
