@@ -22,13 +22,12 @@ class PostController extends Controller
                     'ShowPost.php'
                 );
             } else {
-                // 削除済みのツイートです みたいな表示にするのも有りかも
+                // エラーメッセージ表示は無い（表示ボタンを非表示にし、通常はありえない操作になるため）
                 return $this->redirect('/');
             }
         } else {
             return $this->render(
-                ['login' => 'TRUE',
-                ],
+                [],
                 'Login.php'
             );
         }
@@ -62,9 +61,6 @@ class PostController extends Controller
     public function createAction()
     {
 
-        var_dump(mb_strlen($_POST['text']));
-        var_dump(mb_strlen($_POST['text'], mb_internal_encoding()));
-
         //ログイン中
         if (Auth::check()) {
             //TODO: バリデーション処理を追加
@@ -80,7 +76,6 @@ class PostController extends Controller
     {
         //ログイン中
         if (Auth::check()) {
-            var_dump($params['id']);
 
             $post = new Post();
             $post = $post->fetch($params['id']);
@@ -89,6 +84,8 @@ class PostController extends Controller
             if ($post["user_id"] === Auth::user()->id) {
                 $post = new Post();
                 $post->delete($params['id']);
+            } else {
+                Message::set('delete', '自分のツイート以外は削除できません。');
             }
 
             //ホーム画面を表示する
