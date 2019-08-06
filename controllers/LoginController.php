@@ -3,8 +3,6 @@
 class LoginController extends Controller
 {
 
-    private $errors = [];
-
     public function login(string $email, string $password)
     {
         //ログイン処理
@@ -24,15 +22,9 @@ class LoginController extends Controller
             //ログイン失敗したらエラーメッセージとともにLogin画面を再表示
 
             return $this->render(
-                ["errors" => Auth::$errors],
+                [],
                 'Login.php'
             );
-
-            // return $this->render(
-            //     ["errors", Auth::$errors],
-            //     'Login.php'
-            // );
-
         }
 
     }
@@ -45,13 +37,11 @@ class LoginController extends Controller
         if (empty($_POST['password'])) {
             Message::set('password', 'パスワードが未入力です。入力をお願いします');
             $validation = false;
-            // $this->errors['password'] = 'パスワードが未入力です。入力をお願いします';
         }
 
         if (empty($_POST['email'])) {
             Message::set('email', 'メールアドレスが未入力です。入力をお願いします');
             $validation = false;
-            // $this->errors['email'] = 'メールアドレスが未入力です。入力をお願いします';
         }
 
         return $validation;
@@ -78,7 +68,7 @@ class LoginController extends Controller
         Auth::releaseAuthenticate();
 
         return $this->render(
-            ["errors", []],
+            [],
             'Login.php'
         );
     }
@@ -87,25 +77,20 @@ class LoginController extends Controller
     {
 
         $validation = true;
-        $this->errors = [];
 
         if (empty($_POST['name'])) {
             Message::set('name', 'お名前が未入力です。入力をお願いします');
             $validation = false;
-            // $this->errors['name'] = 'お名前が未入力です。入力をお願いします';
         }
 
         if (empty($_POST['password'])) {
             Message::set('password', 'パスワードが未入力です。入力をお願いします');
             $validation = false;
-            // $this->errors['password'] = 'パスワードが未入力です。入力をお願いします';
         }
 
         if (empty($_POST['email'])) {
             Message::set('email', 'メールアドレスが未入力です。入力をお願いします');
             $validation = false;
-
-            // $this->errors['email'] = 'メールアドレスが未入力です。入力をお願いします';
         }
 
         //nameのバリデーション
@@ -113,8 +98,6 @@ class LoginController extends Controller
         if (mb_strlen($_POST['name'], mb_internal_encoding()) > 30) {
             Message::set('name', '名前は30文字未満にしてください。');
             $validation = false;
-
-            // $this->errors["name"] = "名前は30文字未満にしてください。";
         }
 
         //emailのバリデーション
@@ -122,8 +105,6 @@ class LoginController extends Controller
         if (mb_strlen($_POST['email'], mb_internal_encoding()) > 30) {
             Message::set('email', 'メールアドレスは30文字未満にしてください。');
             $validation = false;
-
-            // $this->errors["email"] = "メールアドレスは30文字未満にしてください。";
         }
 
         //passwordのバリデーション
@@ -131,8 +112,6 @@ class LoginController extends Controller
         if (mb_strlen($_POST['password'], mb_internal_encoding()) > 30) {
             Message::set('password', 'メールアドレスは30文字未満にしてください。');
             $validation = false;
-
-            // $this->errors["password"] = "パスワードは30文字未満にしてください。";
         }
 
         return $validation;
@@ -149,11 +128,6 @@ class LoginController extends Controller
             $user->insert($_POST['name'], $_POST['password'], $_POST['email']);
 
             return $this->login($_POST['email'], $_POST['password']);
-
-            // return $this->render(
-            //     ['errors' => $this->errors],
-            //     'Home.php'
-            // );
         }
 
         //TODO: エラー発生時にアドレスバーがregisterになってしまうのがかっこ悪い。
@@ -161,7 +135,7 @@ class LoginController extends Controller
         //$this->redirect('/signup');
 
         return $this->render(
-            ['errors' => $this->errors],
+            [],
             'Signup.php'
         );
 
@@ -172,9 +146,7 @@ class LoginController extends Controller
         //TODO: サインアップ画面表示処理
 
         return $this->render(
-            ['errors' => 'TRUE',
-                'body' => 'default body',
-            ],
+            [],
             'Signup.php'
         );
     }

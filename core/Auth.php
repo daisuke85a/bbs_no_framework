@@ -2,7 +2,6 @@
 
 class Auth
 {
-    public static $errors = [];
 
     public static function releaseAuthenticate()
     {
