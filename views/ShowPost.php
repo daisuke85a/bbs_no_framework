@@ -1,5 +1,15 @@
 <h2>投稿表示画面</h2>
 
+<?php
+if (!empty(Message::get())) {
+    foreach (Message::get() as $key => $msg) {
+        echo ("<li>");
+        $this->escapeEcho($msg->getStr());
+        echo ("</li>");
+    }
+}
+?>
+
 <h3>投稿表示</h3>
 
 <?php

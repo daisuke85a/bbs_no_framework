@@ -35,18 +35,45 @@ class PostController extends Controller
 
     }
 
+    private function validateCreateAction(): bool
+    {
+        $validation = true;
+        // ポスト文字列が空かどうか
+        if (empty($_POST['text'])) {
+            Message::set('text', '投稿内容が未入力です。入力をお願いします');
+            $validation = false;
+        }
+
+        // ポスト文字列が140文字以内かどうか
+        var_dump(mb_strlen($_POST['text'], mb_internal_encoding()));
+        if (mb_strlen($_POST['text'], mb_internal_encoding()) > 140) {
+            Message::set('text', '投稿文字は140文字以下にしてください。');
+            $validation = false;
+        }
+
+        // TODO: 画像ファイルが対応する拡張子かどうか
+
+        // 画像ファイルの中身が不正じゃないか？ TODO::どうやってチェックする？
+        var_dump($validation);
+
+        return $validation;
+    }
+
     public function createAction()
     {
+
+        var_dump(mb_strlen($_POST['text']));
+        var_dump(mb_strlen($_POST['text'], mb_internal_encoding()));
 
         //ログイン中
         if (Auth::check()) {
             //TODO: バリデーション処理を追加
-
-            $post = new Post();
-            $post->insert($_POST["text"]);
+            if ($this->validateCreateAction()) {
+                $post = new Post();
+                $post->insert($_POST["text"]);
+            }
         }
         return $this->redirect('/');
-
     }
 
     public function deleteAction($params)

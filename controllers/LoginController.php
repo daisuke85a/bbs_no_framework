@@ -28,7 +28,6 @@ class LoginController extends Controller
     {
         //入力バリデーションは未入力チェックだけする
         //文字数制限チェックはしない。バレるといけないから。
-
         $validation = true;
 
         if (empty($_POST['password'])) {

@@ -1,5 +1,16 @@
 <h2>ホーム</h2>
 <p><a href="/logout">ログアウト</a></p>
+
+<?php
+if (!empty(Message::get())) {
+    foreach (Message::get() as $key => $msg) {
+        echo ("<li>");
+        $this->escapeEcho($msg->getStr());
+        echo ("</li>");
+    }
+}
+?>
+
 <h3>なまえ</h3>
 <p><?php $this->escapeEcho(Auth::user()->name);?></p>
 
