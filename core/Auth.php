@@ -23,13 +23,13 @@ class Auth
 
         //userが見つからなかったらエラーを返す
         if (!$user->fetch($email)) {
-            Auth::$errors = ["login" => "ユーザーIDとパスワードの組み合わせが違います"];
+            Message::set('login', 'ユーザーIDとパスワードの組み合わせが違います');
             return false;
         }
 
         //パスワードによる認証を試みる
         if (!password_verify($password, $user->password)) {
-            Auth::$errors = ["login" => "ユーザーIDとパスワードの組み合わせが違います"];
+            Message::set('login', 'ユーザーIDとパスワードの組み合わせが違います');
             return false;
         }
 

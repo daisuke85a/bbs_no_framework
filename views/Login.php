@@ -1,10 +1,10 @@
 <h2>ログイン画面</h2>
 
 <?php
-if (!empty($errors)) {
-    foreach ($errors as $key => $value) {
+if (!empty(Message::get())) {
+    foreach (Message::get() as $key => $msg) {
         echo ("<li>");
-        $this->escapeEcho($value);
+        $this->escapeEcho($msg->getStr());
         echo ("</li>");
     }
 }

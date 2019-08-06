@@ -13,6 +13,16 @@ class Message
         return true;
     }
 
+    public static function get()
+    {
+        return $_SESSION['_msg'];
+    }
+
+    public function getStr(): string
+    {
+        return $this->str;
+    }
+
     public static function set(string $key, string $msg)
     {
         $MsgInstance = new Message();
