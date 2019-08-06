@@ -13,11 +13,6 @@ class LoginController extends Controller
 
             return $this->redirect("/");
 
-            // return $this->render(
-            //     ['posts' => $posts],
-            //     'Home.php'
-            // );
-
         } else {
             //ログイン失敗したらエラーメッセージとともにLogin画面を再表示
 
@@ -31,6 +26,8 @@ class LoginController extends Controller
 
     private function validateLogin(): bool
     {
+        //入力バリデーションは未入力チェックだけする
+        //文字数制限チェックはしない。バレるといけないから。
 
         $validation = true;
 
@@ -50,20 +47,17 @@ class LoginController extends Controller
 
     public function loginAction()
     {
-        //TODO: ログイン処理
+        //ログイン処理
         if ($this->validateLogin()) {
             return $this->login($_POST['email'], $_POST['password']);
         } else {
             return $this->redirect('/');
         }
-        //入力バリデーションは未入力チェックだけする
-        //文字数制限チェックはしない。バレるといけないから。
-
     }
 
     public function logoutAction()
     {
-        //TODO: ログアウト処理
+        //ログアウト処理
 
         Auth::releaseAuthenticate();
 
@@ -120,7 +114,7 @@ class LoginController extends Controller
 
     public function registerAction()
     {
-        // TODO: ユーザー登録処理
+        //ユーザー登録処理
 
         if ($this->validateRegister()) {
 
@@ -130,20 +124,12 @@ class LoginController extends Controller
             return $this->login($_POST['email'], $_POST['password']);
         }
 
-        //TODO: エラー発生時にアドレスバーがregisterになってしまうのがかっこ悪い。
-        //本当はsignupにしたいけど、以下コードを入れるとエラーメッセージが表示できない。
-        //$this->redirect('/signup');
-
-        return $this->render(
-            [],
-            'Signup.php'
-        );
-
+        $this->redirect('/signup');
     }
 
     public function signupViewAction()
     {
-        //TODO: サインアップ画面表示処理
+        //サインアップ画面表示処理
 
         return $this->render(
             [],
