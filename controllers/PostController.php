@@ -50,8 +50,34 @@ class PostController extends Controller
             $validation = false;
         }
 
-        // TODO: 画像ファイルが対応する拡張子かどうか
+        // 未定義である・複数ファイルである・$_FILES Corruption 攻撃を受けた
+        // どれかに該当していれば不正なパラメータとして処理する
+        if (!isset($_FILES['image']['error']) || !is_int($_FILES['image']['error'])) {
+            Message::set('image', '画像ファイルのパラメータが不正です');
+            return false;
+        }
 
+        // $_FILES['image']['error'] の値を確認
+        switch ($_FILES['image']['error']) {
+            case UPLOAD_ERR_OK: // OK
+                break;
+            case UPLOAD_ERR_NO_FILE: // ファイル未選択
+                // ファイル投稿なし(textのみ投稿)と判断
+                return $validation;
+            case UPLOAD_ERR_INI_SIZE: // php.ini定義の最大サイズ超過
+            case UPLOAD_ERR_FORM_SIZE: // フォーム定義の最大サイズ超過 (設定した場合のみ)
+                Message::set('image', 'ファイルサイズが大きすぎます!');
+                return false;
+            default:
+                Message::set('image', 'その他エラーが発生しました');
+                return false;
+        }
+
+        // TODO: 画像ファイルが対応する拡張子かどうか
+        // TODO: https: //qiita.com/mpyw/items/939964377766a54d4682 の内容をチェックする
+        // TODO: https: //docs.google.com/spreadsheets/d/1GnjS4lJvU8j3fE7tRANCsSm6FgQJ0ytDlTQeIF75h_E/edit#gid=0 の内容をチェックする
+
+        // TODO: 画像ファイルの移動と命名を試みて、エラー処理を実施する
         // 画像ファイルの中身が不正じゃないか？ TODO::どうやってチェックする？
         var_dump($validation);
 
