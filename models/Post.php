@@ -1,7 +1,8 @@
 <?php
 class Post
 {
-    public function insert($text, $reply_id = null, $image = null)
+
+    private function moveImageFile(): string
     {
         $uploadDir = $_SERVER["DOCUMENT_ROOT"] . '/upload/';
         $uploadFileBaseName = basename($_FILES['image']['name']);
@@ -45,7 +46,19 @@ class Post
 
         // ファイルのパーミッションを確実に0644に設定する
         // 自分は読み書き、他の人は読み込みのみ可能なファイル。
-        chmod($uploadFile, 0644);
+        // TODO::これを入れると画像表示できなくなったため削除。
+        // chmod($uploadFile, 0644);
+
+        return $uploadFileBaseName;
+
+    }
+
+    public function insert($text, $reply_id = null, $image = null)
+    {
+
+        if ($_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
+            $image = $this->moveImageFile();
+        }
 
         $stmt = DB::$connect->prepare(
             'INSERT INTO posts (text , user_id, reply_id , image, valid ) VALUES(:text , :user_id, :reply_id, :image, :valid)'
