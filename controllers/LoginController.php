@@ -11,17 +11,9 @@ class LoginController extends Controller
             $post = new Post();
             $posts = $post->fetchAll();
 
-            return $this->redirect("/");
-
-        } else {
-            //ログイン失敗したらエラーメッセージとともにLogin画面を再表示
-
-            return $this->render(
-                [],
-                'Login.php'
-            );
         }
 
+        return $this->redirect("/");
     }
 
     private function validateLogin(): bool
@@ -60,10 +52,8 @@ class LoginController extends Controller
 
         Auth::releaseAuthenticate();
 
-        return $this->render(
-            [],
-            'Login.php'
-        );
+        return $this->redirect('/');
+
     }
 
     private function validateRegister(): bool
