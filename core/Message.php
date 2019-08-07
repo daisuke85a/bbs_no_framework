@@ -15,6 +15,9 @@ class Message
 
     public static function get()
     {
+        if (empty(($_SESSION['_msg']))) {
+            return null;
+        }
         return $_SESSION['_msg'];
     }
 
@@ -39,6 +42,9 @@ class Message
     // メッセージをセットした後の、次のリクエストに対するResponseをしたあとで、クリアする
     public static function sendRequestFlush()
     {
+        if (empty(($_SESSION['_msg']))) {
+            return;
+        }
 
         foreach ($_SESSION['_msg'] as $key => $msg) {
             //Messageオブジェクト以外の場合はunsetする

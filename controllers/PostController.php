@@ -73,7 +73,28 @@ class PostController extends Controller
                 return false;
         }
 
-        // TODO: 画像ファイルが対応する拡張子かどうか
+        // ここで定義するサイズ上限のオーバーチェック
+        // 2MB以下とする
+        if ($_FILES['image']['size'] > 2000000) {
+            Message::set('image', 'ファイルサイズが大きすぎます!');
+            return false;
+        }
+
+        // $_FILES['image']['mime']の値はブラウザ側で偽装可能なので
+        // MIMEタイプに対応する拡張子を自前で取得する
+        if (!$ext = array_search(
+            mime_content_type($_FILES['image']['tmp_name']),
+            array(
+                'gif' => 'image/gif',
+                'jpg' => 'image/jpeg',
+                'png' => 'image/png',
+            ),
+            true
+        )) {
+            Message::set('image', 'ファイル形式が不正です。git/jpg/pngのいずれかを指定してください');
+            return false;
+        }
+
         // TODO: https: //qiita.com/mpyw/items/939964377766a54d4682 の内容をチェックする
         // TODO: https: //docs.google.com/spreadsheets/d/1GnjS4lJvU8j3fE7tRANCsSm6FgQJ0ytDlTQeIF75h_E/edit#gid=0 の内容をチェックする
 
