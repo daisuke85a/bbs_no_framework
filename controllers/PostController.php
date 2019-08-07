@@ -116,7 +116,11 @@ class PostController extends Controller
                 $post->insert($_POST["text"]);
             }
         }
-        return $this->redirect('/');
+        if (empty($_POST["reply_id"])) {
+            return $this->redirect('/');
+        } else {
+            return $this->redirect('/post/' . $_POST["reply_id"]);
+        }
     }
 
     public function deleteAction($params)
