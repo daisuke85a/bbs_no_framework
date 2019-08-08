@@ -1,4 +1,5 @@
 <h2>投稿表示画面</h2>
+<p><a href="/logout">ログアウト</a></p>
 
 <?php
 if (!empty(Message::get())) {

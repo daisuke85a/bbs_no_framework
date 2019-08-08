@@ -35,18 +35,16 @@ abstract class Controller
         return $content;
     }
 
-    protected function render($variables = [], $view_file, $template = null)
+    protected function render($variables = [], $view_file, $template = 'layout.php')
     {
 
         $defaults =
             [
-            //    'base_url' => $this->request->getBaseUrl(),
-            //    'session'  => $this->session,
         ];
 
         $view = new View($defaults);
 
-        return $view->render($view_file, $variables);
+        return $view->render($view_file, $variables, $template);
 
     }
 
