@@ -1,4 +1,15 @@
 <h2>投稿表示画面</h2>
+<p><a href="/logout">ログアウト</a></p>
+
+<?php
+if (!empty(Message::get())) {
+    foreach (Message::get() as $key => $msg) {
+        echo ("<li>");
+        $this->escapeEcho($msg->getStr());
+        echo ("</li>");
+    }
+}
+?>
 
 <h3>投稿表示</h3>
 
@@ -32,6 +43,7 @@ echo '</table>';
 
 <h3>リプライする</h3>
 <form action="/post/create" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="_token" value="<?=CsrfToken::publication()?>">
     <input type="text" name="text" id="text" placeholder="投稿用のテキストを140文字以内で書いてください" value="">
     <input type="hidden" name="reply_id" value="<?=$postId?>" />
     <input type="file" id="image" name="image">
@@ -40,6 +52,7 @@ echo '</table>';
 
 <h3>削除する</h3>
 <form action="/post/<?=$postId?>/delete" method="POST">
+    <input type="hidden" name="_token" value="<?=CsrfToken::publication()?>">
     <input type="submit" value="投稿削除">
 </form>
 

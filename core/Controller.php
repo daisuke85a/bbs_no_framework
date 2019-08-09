@@ -23,23 +23,28 @@ abstract class Controller
             $this->forward404();
         }
 
+        //ポストリクエストの場合は必ずCsrfTokenが含まれているものとする
+        if ($_SERVER["REQUEST_METHOD"] === 'POST') {
+            if (CsrfToken::check() === false) {
+                $this->forward404();
+            }
+        }
+
         $content = $this->$action_method($params);
 
         return $content;
     }
 
-    protected function render($variables = [], $view_file, $template = null)
+    protected function render($variables = [], $view_file, $template = 'layout.php')
     {
 
         $defaults =
             [
-            //    'base_url' => $this->request->getBaseUrl(),
-            //    'session'  => $this->session,
         ];
 
         $view = new View($defaults);
 
-        return $view->render($view_file, $variables);
+        return $view->render($view_file, $variables, $template);
 
     }
 

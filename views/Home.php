@@ -1,11 +1,24 @@
+<?php $this->setLayoutVar('title', 'ホーム');?>
+
 <h2>ホーム</h2>
 <p><a href="/logout">ログアウト</a></p>
+
+<?php
+if (!empty(Message::get())) {
+    foreach (Message::get() as $key => $msg) {
+        echo ("<li>");
+        $this->escapeEcho($msg->getStr());
+        echo ("</li>");
+    }
+}
+?>
+
 <h3>なまえ</h3>
 <p><?php $this->escapeEcho(Auth::user()->name);?></p>
 
 <form action="/post/create" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="_token" value="<?=CsrfToken::publication()?>">
     <input type="text" name="text" id="text" placeholder="投稿用のテキストを140文字以内で書いてください" value="">
-    <!-- <input type="hidden" name="MAX_FILE_SIZE" value="30000" /> -->
     <input type="file" id="image" name="image">
     <input type="submit" value="投稿">
 </form>

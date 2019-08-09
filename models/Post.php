@@ -1,27 +1,63 @@
 <?php
 class Post
 {
-    public function insert($text, $reply_id = null, $image = null)
+
+    private function moveImageFile(): string
     {
         $uploadDir = $_SERVER["DOCUMENT_ROOT"] . '/upload/';
         $uploadFileBaseName = basename($_FILES['image']['name']);
-        $uploadFile = $uploadDir . $uploadFileBaseName;
         $uploadSuccess = false;
+
+        $ext = array_search(
+            mime_content_type($_FILES['image']['tmp_name']),
+            array(
+                'gif' => 'image/gif',
+                'jpg' => 'image/jpeg',
+                'png' => 'image/png',
+            ),
+            true
+        );
+
+        // ファイルデータからsha256ハッシュを取ってファイル名を決定し，保存する
+        // ファイル名をUNIQUEな文字列に変更する。同名ファイルがアップされたときの上書きを防ぐ
+        $uploadFileBaseName = hash_file("sha256", $_FILES['image']['tmp_name']) . $ext;
+        $uploadFileBaseName = sprintf('%s.%s', $uploadFileBaseName, $ext);
+
+        $uploadFile = $uploadDir . $uploadFileBaseName;
 
         // move_uploaded_fileについて
         // この関数は、filename で指定されたファイルが (PHP の HTTP POST アップロード機構によりアップロードされたという意味で)
         // 有効なアップロードファイルであるかどうかを確認します。
         // そのファイルが有効な場合、destination で指定したファイル名に移動されます。
-        // TODO:ファイル名をUNIQUEな文字列に変更する。同名ファイルがアップされたときの上書きを防ぐ
 
         // PHPによって格納された一時ファイル保存先($_FILES['image']['tmp_name'])から、本ファイル保存先に移動する。
-
-        if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
+        if (move_uploaded_file(
+            $_FILES['image']['tmp_name'],
+            $uploadFile
+        )) {
             $uploadSuccess = true;
             $image = $uploadFileBaseName;
+
         } else {
             $uploadSuccess = false;
             $image = null;
+            Message::set('image', 'ファイル保存時にエラーが発生しました');
+        }
+
+        // ファイルのパーミッションを確実に0644に設定する
+        // 自分は読み書き、他の人は読み込みのみ可能なファイル。
+        // TODO::これを入れると画像表示できなくなったため削除。
+        // chmod($uploadFile, 0644);
+
+        return $uploadFileBaseName;
+
+    }
+
+    public function insert($text, $reply_id = null, $image = null)
+    {
+
+        if ($_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
+            $image = $this->moveImageFile();
         }
 
         $stmt = DB::$connect->prepare(
