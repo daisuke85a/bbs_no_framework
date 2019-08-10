@@ -12,7 +12,9 @@ class PostController extends Controller
             $posts = $post->fetchPage($params['page']);
 
             return $this->render(
-                ['posts' => $posts],
+                ['posts' => $posts,
+                    'page' => $params['page'],
+                ],
                 'Home.php'
             );
         } else {

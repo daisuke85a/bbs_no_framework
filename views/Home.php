@@ -52,3 +52,6 @@ foreach ($posts as $post => $value) {
 echo '</table>';
 
 ?>
+
+<a href="/page/<?php $this->escapeEcho((int) $page - 1)?>">前ページ表示</a>
+<a href="/page/<?php $this->escapeEcho((int) $page + 1)?>">次ページ表示</a>

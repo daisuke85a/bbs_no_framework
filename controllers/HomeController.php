@@ -12,7 +12,9 @@ class HomeController extends Controller
             $posts = $post->fetchPage(1);
 
             return $this->render(
-                ['posts' => $posts],
+                ['posts' => $posts,
+                    'page' => 1,
+                ],
                 'Home.php'
             );
         } else {
