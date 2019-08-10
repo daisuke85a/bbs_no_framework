@@ -24,6 +24,7 @@ require '../models/Post.php';
 
 // viewsは読み込まない（表示するときだけ読み込む）
 require '../Application.php';
+require '../BbsApplication.php';
 
-$app = new Application();
+$app = new BbsApplication();
 $app->run();

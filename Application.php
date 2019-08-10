@@ -2,7 +2,7 @@
 
 class Application
 {
-    protected $router;
+    private $router;
 
     public function __construct()
     {
@@ -13,30 +13,15 @@ class Application
         ini_set('display_errors', 'On');
     }
 
-    protected function registerRoutes()
+    protected function registerRoutes(): array
     {
-        return [
-            '/' => ['controller' => 'home', 'action' => 'welcome'],
-            '/login' => ['controller' => 'login', 'action' => 'login'],
-            '/logout' => ['controller' => 'login', 'action' => 'logout'],
-            '/signup' => ['controller' => 'login', 'action' => 'signupView'],
-            '/register' => ['controller' => 'login', 'action' => 'register'],
-            '/post/create' => ['controller' => 'post', 'action' => 'create'],
-            '/post/:id/delete' => ['controller' => 'post', 'action' => 'delete'],
-            '/post/:id' => ['controller' => 'post', 'action' => 'show'],
-            '/page/:page' => ['controller' => 'post', 'action' => 'showPage'],
-        ];
+        return [];
     }
 
     public function run()
     {
 
-        // TODO:Controllerの特定
-        // if文で愚直に判定して$controllerに代入する
-        // $controller = new TestController();
-        // $action = 'index';
-        // $params = [];
-
+        // Controllerの特定
         $params = $this->router->resolve($_SERVER['REQUEST_URI']);
         if ($params === false) {
             // TODO A
