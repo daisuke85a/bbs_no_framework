@@ -120,7 +120,7 @@ class Post
         ON posts.user_id = users.id WHERE posts.id = :postId AND posts.valid = 1'
         );
 
-        $stmt->bindValue(':postId', $postId, PDO::PARAM_STR);
+        $stmt->bindValue(':postId', $postId, PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
