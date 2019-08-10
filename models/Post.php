@@ -136,10 +136,8 @@ class Post
                 ON posts.user_id = users.id WHERE posts.reply_id = :postId AND posts.valid = 1 ORDER BY created_at DESC'
         );
 
-        $params =
-            [':postId' => $postId];
-
-        $stmt->execute($params);
+        $stmt->bindValue(':postId', $postId, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
