@@ -80,15 +80,14 @@ class Post
             'INSERT INTO posts (text , user_id, reply_id , image, valid ) VALUES(:text , :user_id, :reply_id, :image, :valid)'
         );
 
-        $params =
-            [':text' => $text,
-            ':user_id' => Auth::user()->id,
-            ':reply_id' => $_POST["reply_id"],
-            ':image' => $image,
-            ':valid' => true,
-        ];
+        // bindValueで明示的に型付けする（暗黙的にSTRに変換されるのを防ぐ）
+        $stmt->bindValue(':text', $text, PDO::PARAM_STR);
+        $stmt->bindValue(':image', $image, PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', Auth::user()->id, PDO::PARAM_INT);
+        $stmt->bindValue(':reply_id', $_POST_["reply_id"], PDO::PARAM_INT);
+        $stmt->bindValue(':valid', true, PDO::PARAM_BOOL);
 
-        $stmt->execute($params);
+        $stmt->execute();
 
         return;
     }
