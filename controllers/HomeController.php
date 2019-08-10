@@ -4,13 +4,12 @@ class HomeController extends Controller
 {
     public function welcomeAction()
     {
-        //TODO: ログイン中ならホームを表示。未ログインならログイン画面を表示
 
         //ログイン中
         if (Auth::check()) {
-            //全投稿を表示
+            //1ページ目を表示
             $post = new Post();
-            $posts = $post->fetchAll();
+            $posts = $post->fetchPage(1);
 
             return $this->render(
                 ['posts' => $posts],
@@ -18,8 +17,7 @@ class HomeController extends Controller
             );
         } else {
             return $this->render(
-                ['login' => 'TRUE',
-                ],
+                [],
                 'Login.php'
             );
         }

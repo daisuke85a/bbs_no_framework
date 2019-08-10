@@ -7,9 +7,9 @@ class LoginController extends Controller
     {
         //ログイン処理
         if (Auth::authenticate($email, $password)) {
-            //全投稿を表示
+            //1ページ目を表示
             $post = new Post();
-            $posts = $post->fetchAll();
+            $posts = $post->fetchPage(1);
 
         }
 

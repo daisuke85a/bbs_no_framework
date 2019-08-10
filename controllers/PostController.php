@@ -98,7 +98,6 @@ class PostController extends Controller
         // TODO: https: //qiita.com/mpyw/items/939964377766a54d4682 の内容をチェックする
         // TODO: https: //docs.google.com/spreadsheets/d/1GnjS4lJvU8j3fE7tRANCsSm6FgQJ0ytDlTQeIF75h_E/edit#gid=0 の内容をチェックする
 
-        // TODO: 画像ファイルの移動と命名を試みて、エラー処理を実施する
         // 画像ファイルの中身が不正じゃないか？ TODO::どうやってチェックする？
         var_dump($validation);
 
