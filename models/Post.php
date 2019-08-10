@@ -6,13 +6,16 @@ class Post
 
     public function getPagesNumber(): int
     {
-        //TODO: 有効なポスト数の合計を求める
+        // 有効なポスト数の合計を求める
+        $stmt = DB::$connect->prepare(
+            'SELECT COUNT(*) FROM posts WHERE posts.valid = 1'
+        );
+        $stmt->execute();
+        $postNum = (int) $stmt->fetchColumn();
 
-        //TODO:1ページあたりのポスト数で割る
+        // 1ページあたりのポスト数で割る
+        return ((int) ($postNum / $this->postPerPage)) + 1;
 
-        //TODO:ページ数を返信する
-
-        return 3;
     }
 
     private function moveImageFile(): string
@@ -101,6 +104,7 @@ class Post
         // 必ずbindValueで型を指定する。デフォルトではSTRとして扱われるため注意
         // 参考：http: //blog.a-way-out.net/blog/2013/12/15/pdo-prepare-statement-numeric-literal/
         // 参考：https: //blog.tokumaru.org/2009/09/implicit-type-conversion-of-SQL-is-trap-full.html#p01
+
         $stmt->bindValue(':limitFirst', (($page - 1) * $this->postPerPage + 1), PDO::PARAM_INT);
         $stmt->bindValue(':limitEnd', $this->postPerPage, PDO::PARAM_INT);
 
