@@ -2,6 +2,28 @@
 
 class PostController extends Controller
 {
+    public function showPageAction($params)
+    {
+        // var_dump($params);
+        //ログイン中
+        if (Auth::check()) {
+            //指定されたページを表示
+            $post = new Post();
+            $posts = $post->fetchPage($params['page']);
+
+            return $this->render(
+                ['posts' => $posts,
+                    'page' => $params['page'],
+                    'maxPage' => $post->getPagesNumber(),
+                ],
+                'Home.php'
+            );
+        } else {
+            //ホーム画面を表示する
+            return $this->redirect('/');
+        }
+    }
+
     public function showAction($params)
     {
         //ログイン中
@@ -98,10 +120,6 @@ class PostController extends Controller
         // TODO: https: //qiita.com/mpyw/items/939964377766a54d4682 の内容をチェックする
         // TODO: https: //docs.google.com/spreadsheets/d/1GnjS4lJvU8j3fE7tRANCsSm6FgQJ0ytDlTQeIF75h_E/edit#gid=0 の内容をチェックする
 
-        // TODO: 画像ファイルの移動と命名を試みて、エラー処理を実施する
-        // 画像ファイルの中身が不正じゃないか？ TODO::どうやってチェックする？
-        var_dump($validation);
-
         return $validation;
     }
 
@@ -110,7 +128,6 @@ class PostController extends Controller
 
         //ログイン中
         if (Auth::check()) {
-            //TODO: バリデーション処理を追加
             if ($this->validateCreateAction()) {
                 $post = new Post();
                 $post->insert($_POST["text"]);

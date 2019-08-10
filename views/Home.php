@@ -52,3 +52,17 @@ foreach ($posts as $post => $value) {
 echo '</table>';
 
 ?>
+
+<?php
+if (((int) $page - 1) !== 0) {
+    echo ('<a href="/page/');
+    $this->escapeEcho((int) $page - 1);
+    echo ('">前ページ表示</a>');
+}
+
+if (((int) $page + 1) <= (int) $maxPage) {
+    echo ('<a href="/page/');
+    $this->escapeEcho((int) $page + 1);
+    echo ('">次ページ表示</a>');
+}
+?>
