@@ -12,6 +12,7 @@ require '../core/DB.php';
 require '../core/Auth.php';
 require '../core/CsrfToken.php';
 require '../core/Message.php';
+require '../core/Application.php';
 
 // controllersを読み込む
 require '../controllers/HomeController.php';
@@ -23,7 +24,6 @@ require '../models/User.php';
 require '../models/Post.php';
 
 // viewsは読み込まない（表示するときだけ読み込む）
-require '../Application.php';
 require '../BbsApplication.php';
 
 $app = new BbsApplication();
