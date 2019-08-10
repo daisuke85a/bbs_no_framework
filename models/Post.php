@@ -69,7 +69,7 @@ class Post
 
     }
 
-    public function insert($text, $reply_id = null, $image = null)
+    public function insert($text, $reply_id = null, $image = null): bool
     {
 
         if ($_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
@@ -80,17 +80,16 @@ class Post
             'INSERT INTO posts (text , user_id, reply_id , image, valid ) VALUES(:text , :user_id, :reply_id, :image, :valid)'
         );
 
-        $params =
-            [':text' => $text,
-            ':user_id' => Auth::user()->id,
-            ':reply_id' => $_POST["reply_id"],
-            ':image' => $image,
-            ':valid' => true,
-        ];
+        // bindValueで明示的に型付けする（暗黙的にSTRに変換されるのを防ぐ）
+        $stmt->bindValue(':text', $text, PDO::PARAM_STR);
+        $stmt->bindValue(':image', $image, PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', Auth::user()->id, PDO::PARAM_INT);
+        $stmt->bindValue(':reply_id', $_POST["reply_id"], PDO::PARAM_INT);
+        $stmt->bindValue(':valid', true, PDO::PARAM_BOOL);
 
-        $stmt->execute($params);
+        $stmt->execute();
 
-        return;
+        return true;
     }
 
     public function fetchPage(int $page): array
@@ -113,7 +112,7 @@ class Post
 
     }
 
-    public function fetch($postId)
+    public function fetch(int $postId): array
     {
         //emailに該当するuserを抽出する(emailはUNIQUE)
         $stmt = DB::$connect->prepare(
@@ -121,17 +120,14 @@ class Post
         ON posts.user_id = users.id WHERE posts.id = :postId AND posts.valid = 1'
         );
 
-        $params =
-            [
-            ':postId' => $postId,
-        ];
+        $stmt->bindValue(':postId', $postId, PDO::PARAM_INT);
+        $stmt->execute();
 
-        $stmt->execute($params);
         return $stmt->fetch(PDO::FETCH_ASSOC);
 
     }
 
-    public function fetchReplay($postId): array
+    public function fetchReplay(int $postId): array
     {
         //ある投稿のリプライを全て取得する
         //TODO: 投稿が増えると処理やメモリに時間がかかる。本来は細切れに取得するのが望ましい。
@@ -140,27 +136,23 @@ class Post
                 ON posts.user_id = users.id WHERE posts.reply_id = :postId AND posts.valid = 1 ORDER BY created_at DESC'
         );
 
-        $params =
-            [':postId' => $postId];
+        $stmt->bindValue(':postId', $postId, PDO::PARAM_INT);
+        $stmt->execute();
 
-        $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
 
-    public function delete($id): bool
+    public function delete(int $id): bool
     {
-        var_dump("delete");
-        var_dump($id);
 
         $stmt = DB::$connect->prepare(
             'UPDATE posts SET valid = 0 WHERE id = :id'
         );
 
-        $params =
-            [':id' => $id];
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
 
-        $stmt->execute($params);
         return true;
     }
 

@@ -15,12 +15,9 @@ class User
             'SELECT id, name, password FROM users WHERE email = :email'
         );
 
-        $params =
-            [
-            ':email' => $email,
-        ];
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 
-        $stmt->execute($params);
+        $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!empty($result)) {
@@ -31,13 +28,12 @@ class User
 
             return true;
         } else {
-
             return false;
         }
 
     }
 
-    public function insert($name, $password, $email)
+    public function insert($name, $password, $email): bool
     {
 
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
@@ -46,14 +42,12 @@ class User
             'INSERT INTO users (name , password, email ) VALUES(:name , :password, :email)'
         );
 
-        $params =
-            [':name' => $name,
-            ':password' => $password_hash,
-            ':email' => $email,
-        ];
+        $stmt->bindValue(':name', $name, PDO::PARAM_STR);
+        $stmt->bindValue(':password', $password_hash, PDO::PARAM_STR);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 
-        $stmt->execute($params);
+        $stmt->execute();
 
-        return $stmt;
+        return true;
     }
 }

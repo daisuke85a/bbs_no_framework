@@ -66,7 +66,6 @@ class PostController extends Controller
         }
 
         // ポスト文字列が140文字以内かどうか
-        var_dump(mb_strlen($_POST['text'], mb_internal_encoding()));
         if (mb_strlen($_POST['text'], mb_internal_encoding()) > 140) {
             Message::set('text', '投稿文字は140文字以下にしてください。');
             $validation = false;
@@ -133,6 +132,7 @@ class PostController extends Controller
                 $post->insert($_POST["text"]);
             }
         }
+
         if (empty($_POST["reply_id"])) {
             return $this->redirect('/');
         } else {
@@ -155,9 +155,9 @@ class PostController extends Controller
             } else {
                 Message::set('delete', '自分のツイート以外は削除できません。');
             }
-
-            //ホーム画面を表示する
-            return $this->redirect('/');
         }
+        //ホーム画面を表示する
+        return $this->redirect('/');
+
     }
 }
