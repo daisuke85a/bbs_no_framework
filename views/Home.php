@@ -53,5 +53,16 @@ echo '</table>';
 
 ?>
 
-<a href="/page/<?php $this->escapeEcho((int) $page - 1)?>">前ページ表示</a>
-<a href="/page/<?php $this->escapeEcho((int) $page + 1)?>">次ページ表示</a>
+<?php
+if (((int) $page - 1) !== 0) {
+    echo ('<a href="/page/');
+    $this->escapeEcho((int) $page - 1);
+    echo ('">前ページ表示</a>');
+}
+
+if (((int) $page + 1) <= (int) $maxPage) {
+    echo ('<a href="/page/');
+    $this->escapeEcho((int) $page + 1);
+    echo ('">次ページ表示</a>');
+}
+?>

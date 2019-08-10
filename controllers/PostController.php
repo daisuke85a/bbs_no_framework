@@ -14,6 +14,7 @@ class PostController extends Controller
             return $this->render(
                 ['posts' => $posts,
                     'page' => $params['page'],
+                    'maxPage' => $post->getPagesNumber(),
                 ],
                 'Home.php'
             );

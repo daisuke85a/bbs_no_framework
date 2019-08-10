@@ -14,6 +14,7 @@ class HomeController extends Controller
             return $this->render(
                 ['posts' => $posts,
                     'page' => 1,
+                    'maxPage' => $post->getPagesNumber(),
                 ],
                 'Home.php'
             );

@@ -4,7 +4,7 @@ class Post
     //1ページあたりのポスト数
     public $postPerPage = 10;
 
-    private function getPagesNumber(): int
+    public function getPagesNumber(): int
     {
         //TODO: 有効なポスト数の合計を求める
 
@@ -12,7 +12,7 @@ class Post
 
         //TODO:ページ数を返信する
 
-        return 0;
+        return 3;
     }
 
     private function moveImageFile(): string
