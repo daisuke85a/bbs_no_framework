@@ -84,7 +84,7 @@ class Post
         $stmt->bindValue(':text', $text, PDO::PARAM_STR);
         $stmt->bindValue(':image', $image, PDO::PARAM_STR);
         $stmt->bindValue(':user_id', Auth::user()->id, PDO::PARAM_INT);
-        $stmt->bindValue(':reply_id', $_POST_["reply_id"], PDO::PARAM_INT);
+        $stmt->bindValue(':reply_id', $_POST["reply_id"], PDO::PARAM_INT);
         $stmt->bindValue(':valid', true, PDO::PARAM_BOOL);
 
         $stmt->execute();
