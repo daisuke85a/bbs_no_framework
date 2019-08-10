@@ -105,7 +105,7 @@ class Post
         // 参考：http: //blog.a-way-out.net/blog/2013/12/15/pdo-prepare-statement-numeric-literal/
         // 参考：https: //blog.tokumaru.org/2009/09/implicit-type-conversion-of-SQL-is-trap-full.html#p01
 
-        $stmt->bindValue(':limitFirst', (($page - 1) * $this->postPerPage + 1), PDO::PARAM_INT);
+        $stmt->bindValue(':limitFirst', (($page - 1) * $this->postPerPage), PDO::PARAM_INT);
         $stmt->bindValue(':limitEnd', $this->postPerPage, PDO::PARAM_INT);
 
         $stmt->execute();
