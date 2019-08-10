@@ -92,8 +92,8 @@ class Post
 
     public function fetchPage(int $page): array
     {
-        //全ての投稿を取得する
-        //TODO: 投稿が増えると処理やメモリに時間がかかる。本来は細切れに取得するのが望ましい。
+
+        //指定された投稿のページを取得する
         $stmt = DB::$connect->prepare(
             'SELECT *, posts.id AS post_id FROM posts INNER JOIN users ON posts.user_id = users.id WHERE posts.valid = 1 ORDER BY created_at DESC LIMIT :limitFirst , :limitEnd'
         );
@@ -102,7 +102,7 @@ class Post
         // 参考：http: //blog.a-way-out.net/blog/2013/12/15/pdo-prepare-statement-numeric-literal/
         // 参考：https: //blog.tokumaru.org/2009/09/implicit-type-conversion-of-SQL-is-trap-full.html#p01
         $stmt->bindValue(':limitFirst', (($page - 1) * $this->postPerPage + 1), PDO::PARAM_INT);
-        $stmt->bindValue(':limitEnd', (($page - 1) * $this->postPerPage + $this->postPerPage), PDO::PARAM_INT);
+        $stmt->bindValue(':limitEnd', $this->postPerPage, PDO::PARAM_INT);
 
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

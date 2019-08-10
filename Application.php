@@ -24,6 +24,7 @@ class Application
             '/post/create' => ['controller' => 'post', 'action' => 'create'],
             '/post/:id/delete' => ['controller' => 'post', 'action' => 'delete'],
             '/post/:id' => ['controller' => 'post', 'action' => 'show'],
+            '/page/:page' => ['controller' => 'post', 'action' => 'showPage'],
         ];
     }
 
