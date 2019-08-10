@@ -3,7 +3,7 @@
 class LoginController extends Controller
 {
 
-    public function login(string $email, string $password)
+    public function login(string $email, string $password): string
     {
         //ログイン処理
         if (Auth::authenticate($email, $password)) {
@@ -36,7 +36,7 @@ class LoginController extends Controller
 
     }
 
-    public function loginAction()
+    public function loginAction(): string
     {
         //ログイン処理
         if ($this->validateLogin()) {
@@ -46,7 +46,7 @@ class LoginController extends Controller
         }
     }
 
-    public function logoutAction()
+    public function logoutAction(): string
     {
         //ログアウト処理
 
@@ -101,7 +101,7 @@ class LoginController extends Controller
 
     }
 
-    public function registerAction()
+    public function registerAction(): string
     {
         //ユーザー登録処理
 
@@ -113,10 +113,10 @@ class LoginController extends Controller
             return $this->login($_POST['email'], $_POST['password']);
         }
 
-        $this->redirect('/signup');
+        return $this->redirect('/signup');
     }
 
-    public function signupViewAction()
+    public function signupViewAction(): string
     {
         //サインアップ画面表示処理
 

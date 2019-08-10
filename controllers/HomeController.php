@@ -2,7 +2,7 @@
 
 class HomeController extends Controller
 {
-    public function welcomeAction()
+    public function welcomeAction(): string
     {
 
         //ログイン中

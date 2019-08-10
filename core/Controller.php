@@ -35,7 +35,7 @@ abstract class Controller
         return $content;
     }
 
-    protected function render($variables = [], $view_file, $template = 'layout.php')
+    protected function render($variables = [], $view_file, $template = 'layout.php'): string
     {
 
         $defaults =
@@ -55,7 +55,7 @@ abstract class Controller
         // throw new HttpNotFoundException('Forwarded 404 page from ' . $this->controller_name . '/' . $this->action_name);
     }
 
-    protected function redirect($url)
+    protected function redirect($url): string
     {
 
         // 絶対URLへのredirectは対応しない
@@ -71,5 +71,6 @@ abstract class Controller
         Response::$status_text = 'Found';
         Response::$http_headers['Location'] = $url;
 
+        return "";
     }
 }
