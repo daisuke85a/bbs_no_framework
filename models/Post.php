@@ -120,12 +120,9 @@ class Post
         ON posts.user_id = users.id WHERE posts.id = :postId AND posts.valid = 1'
         );
 
-        $params =
-            [
-            ':postId' => $postId,
-        ];
+        $stmt->bindValue(':postId', $postId, PDO::PARAM_STR);
+        $stmt->execute();
 
-        $stmt->execute($params);
         return $stmt->fetch(PDO::FETCH_ASSOC);
 
     }
