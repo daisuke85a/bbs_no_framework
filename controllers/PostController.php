@@ -4,7 +4,6 @@ class PostController extends Controller
 {
     public function showPageAction(array $params): string
     {
-        // var_dump($params);
         //ログイン中
         if (Auth::check()) {
             //指定されたページを表示

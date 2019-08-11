@@ -8,6 +8,22 @@ class User
     public $password;
     public $email;
 
+    //ユーザーが存在するか確認する
+    public function existUser(string $email): bool
+    {
+        //1件のみSelectして件数が増えたときのパフォーマンスを向上させる
+        $stmt = DB::$connect->prepare(
+            'SELECT id FROM users WHERE email =:email LIMIT 0'
+        );
+
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
     public function fetch(string $email): bool
     {
         //emailに該当するuserを抽出する(emailはUNIQUE)
