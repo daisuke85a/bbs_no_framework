@@ -3,8 +3,8 @@
 abstract class Controller
 {
 
-    protected $controller_name;
-    protected $action_name;
+    protected $controller_name = "";
+    protected $action_name = "";
 
     public function __construct()
     {

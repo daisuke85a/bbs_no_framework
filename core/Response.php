@@ -2,7 +2,7 @@
 
 class Response
 {
-    public static $content;
+    public static $content = "";
     public static $status_code = 200;
     public static $status_text = 'OK';
     public static $http_headers = [];

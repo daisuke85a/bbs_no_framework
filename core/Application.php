@@ -2,6 +2,7 @@
 
 class Application
 {
+    //TODO: 独自クラスの変数宣言時に型づけするのはどうすればいいか？PHPではまだできない？
     private $router;
 
     public function __construct()
