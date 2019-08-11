@@ -2,17 +2,15 @@
 
 class View
 {
-    protected $base_dir;
-    protected $defaults;
+    protected $defaults = [];
     protected $layout_variables = [];
 
-    public function __construct($base_dir, $defaults = [])
+    public function __construct(array $defaults = [])
     {
-        $this->base_dir = $base_dir;
         $this->defaults = $defaults;
     }
 
-    public function escapeEcho(string $string)
+    public function escapeEcho(string $string): void
     {
         echo (htmlspecialchars($string, ENT_QUOTES, 'UTF-8'));
     }
@@ -20,12 +18,12 @@ class View
     //レイアウトファイル側に値を設定したい場合、ビューファイル内でsetLayoutVar()メソッドを呼び出すことで値が設定できます
     //例えば、ページのタイトルは実行するアクションによって変わる。しかし、タイトルはレイアウト側に出力する必要がある。
     //そういった場合に設定する
-    public function setLayoutVar(string $name, string $value)
+    public function setLayoutVar(string $name, string $value): void
     {
         $this->layout_variables[$name] = $value;
     }
 
-    public function render($view_file, array $_variables = [], $_layout = null)
+    public function render(string $view_file, array $_variables = [], string $_layout = null): string
     {
         $_file = '../views/' . $view_file;
 

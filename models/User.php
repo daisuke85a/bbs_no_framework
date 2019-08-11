@@ -8,7 +8,7 @@ class User
     public $password;
     public $email;
 
-    public function fetch($email): bool
+    public function fetch(string $email): bool
     {
         //emailに該当するuserを抽出する(emailはUNIQUE)
         $stmt = DB::$connect->prepare(
@@ -33,7 +33,7 @@ class User
 
     }
 
-    public function insert($name, $password, $email): bool
+    public function insert(string $name, string $password, string $email): void
     {
 
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
@@ -48,6 +48,6 @@ class User
 
         $stmt->execute();
 
-        return true;
+        return;
     }
 }

@@ -6,13 +6,13 @@ abstract class Controller
     protected $controller_name;
     protected $action_name;
 
-    public function __construct($appplication)
+    public function __construct()
     {
         // substrの-10はControllerが10文字なので後ろの10文字分を取り除くということ
         $this->controller_name = strtolower(substr(get_class($this), 0, -10));
     }
 
-    public function run($action, $params = [])
+    public function run(string $action, array $params = []): string
     {
 
         $this->action_name = $action;
@@ -35,7 +35,7 @@ abstract class Controller
         return $content;
     }
 
-    protected function render($variables = [], $view_file, $template = 'layout.php'): string
+    protected function render(array $variables = [], string $view_file, string $template = 'layout.php'): string
     {
 
         $defaults =
@@ -48,14 +48,14 @@ abstract class Controller
 
     }
 
-    protected function forward404()
+    protected function forward404(): void
     {
         // TODO:しっかり例外処理を書く
         throw new Exception();
         // throw new HttpNotFoundException('Forwarded 404 page from ' . $this->controller_name . '/' . $this->action_name);
     }
 
-    protected function redirect($url): string
+    protected function redirect(string $url): string
     {
 
         // 絶対URLへのredirectは対応しない

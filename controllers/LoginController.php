@@ -97,6 +97,8 @@ class LoginController extends Controller
             $validation = false;
         }
 
+        //TODO: emailが唯一であることの確認をする
+
         return $validation;
 
     }
