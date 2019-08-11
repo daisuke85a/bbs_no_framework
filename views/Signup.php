@@ -1,7 +1,8 @@
 <h2>サインアップ画面</h2>
 <?php
-if (!empty(Message::get())) {
-    foreach (Message::get() as $key => $msg) {
+
+if (!empty(\Core\Message::get())) {
+    foreach (\Core\Message::get() as $key => $msg) {
         echo ("<li>");
         $this->escapeEcho($msg->getStr());
         echo ("</li>");
@@ -10,7 +11,7 @@ if (!empty(Message::get())) {
 ?>
 
 <form action="/register" method="POST">
-    <input type="hidden" name="_token" value="<?=CsrfToken::publication()?>">
+    <input type="hidden" name="_token" value="<?=\Core\CsrfToken::publication()?>">
     <input type="text" name="name" placeholder="名前を入力ください">
     <input type="email" name="email" placeholder="emailアドレスを入力ください">
     <input type="password" name="password" placeholder="パスワードを入力ください">

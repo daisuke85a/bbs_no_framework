@@ -1,5 +1,7 @@
 <?php
 
+namespace core;
+
 class Message
 {
     private $life = 2;

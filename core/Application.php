@@ -1,5 +1,7 @@
 <?php
 
+namespace core;
+
 class Application
 {
     //TODO: 独自クラスの変数宣言時に型づけするのはどうすればいいか？PHPではまだできない？

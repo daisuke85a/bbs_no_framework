@@ -1,5 +1,9 @@
 <?php
 
+namespace models;
+
+use \Core\DB;
+
 class User
 {
 
@@ -16,10 +20,10 @@ class User
             'SELECT id FROM users WHERE email =:email LIMIT 0'
         );
 
-        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->bindValue(':email', $email, \PDO::PARAM_STR);
 
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         return $result;
     }
@@ -27,14 +31,14 @@ class User
     public function fetch(string $email): bool
     {
         //emailに該当するuserを抽出する(emailはUNIQUE)
-        $stmt = DB::$connect->prepare(
+        $stmt = \Core\DB::$connect->prepare(
             'SELECT id, name, password FROM users WHERE email = :email'
         );
 
-        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->bindValue(':email', $email, \PDO::PARAM_STR);
 
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if (!empty($result)) {
             $this->id = $result['id'];
@@ -58,9 +62,9 @@ class User
             'INSERT INTO users (name , password, email ) VALUES(:name , :password, :email)'
         );
 
-        $stmt->bindValue(':name', $name, PDO::PARAM_STR);
-        $stmt->bindValue(':password', $password_hash, PDO::PARAM_STR);
-        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->bindValue(':name', $name, \PDO::PARAM_STR);
+        $stmt->bindValue(':password', $password_hash, \PDO::PARAM_STR);
+        $stmt->bindValue(':email', $email, \PDO::PARAM_STR);
 
         $stmt->execute();
 

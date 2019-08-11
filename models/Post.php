@@ -1,4 +1,9 @@
 <?php
+
+use \Core\Auth;
+use \Core\DB;
+use \Core\Message;
+
 class Post
 {
     //1ページあたりのポスト数
@@ -7,7 +12,7 @@ class Post
     public function getPagesNumber(): int
     {
         // 有効なポスト数の合計を求める
-        $stmt = DB::$connect->prepare(
+        $stmt = \Core\DB::$connect->prepare(
             'SELECT COUNT(*) FROM posts WHERE posts.valid = 1'
         );
         $stmt->execute();
@@ -96,7 +101,7 @@ class Post
     {
 
         //指定された投稿のページを取得する
-        $stmt = DB::$connect->prepare(
+        $stmt = \Core\DB::$connect->prepare(
             'SELECT *, posts.id AS post_id FROM posts INNER JOIN users ON posts.user_id = users.id WHERE posts.valid = 1 ORDER BY created_at DESC LIMIT :limitFirst , :limitEnd'
         );
 
@@ -104,11 +109,12 @@ class Post
         // 参考：http: //blog.a-way-out.net/blog/2013/12/15/pdo-prepare-statement-numeric-literal/
         // 参考：https: //blog.tokumaru.org/2009/09/implicit-type-conversion-of-SQL-is-trap-full.html#p01
 
-        $stmt->bindValue(':limitFirst', (($page - 1) * $this->postPerPage), PDO::PARAM_INT);
-        $stmt->bindValue(':limitEnd', $this->postPerPage, PDO::PARAM_INT);
+        $stmt->bindValue(':limitFirst', (($page - 1) * $this->postPerPage), \PDO::PARAM_INT);
+        $stmt->bindValue(':limitEnd', $this->postPerPage, \PDO::PARAM_INT);
 
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
     }
 
@@ -120,10 +126,10 @@ class Post
         ON posts.user_id = users.id WHERE posts.id = :postId AND posts.valid = 1'
         );
 
-        $stmt->bindValue(':postId', $postId, PDO::PARAM_INT);
+        $stmt->bindValue(':postId', $postId, \PDO::PARAM_INT);
         $stmt->execute();
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
 
     }
 
@@ -136,10 +142,10 @@ class Post
                 ON posts.user_id = users.id WHERE posts.reply_id = :postId AND posts.valid = 1 ORDER BY created_at DESC'
         );
 
-        $stmt->bindValue(':postId', $postId, PDO::PARAM_INT);
+        $stmt->bindValue(':postId', $postId, \PDO::PARAM_INT);
         $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
     }
 
@@ -150,7 +156,7 @@ class Post
             'UPDATE posts SET valid = 0 WHERE id = :id'
         );
 
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':id', $id, \PDO::PARAM_INT);
         $stmt->execute();
 
         return true;

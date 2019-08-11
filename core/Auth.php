@@ -1,5 +1,9 @@
 <?php
 
+namespace core;
+
+use models;
+
 class Auth
 {
 
@@ -10,7 +14,7 @@ class Auth
         unset($_SESSION['_token']);
     }
 
-    public static function user(): User
+    public static function user(): \models\User
     {
         return $_SESSION['user'];
     }
@@ -18,7 +22,7 @@ class Auth
     public static function authenticate(string $email, string $password): bool
     {
 
-        $user = new User();
+        $user = new \Models\User();
 
         //userが見つからなかったらエラーを返す
         if (!$user->fetch($email)) {

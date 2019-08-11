@@ -1,5 +1,10 @@
 <?php
 
+use \Core\Auth;
+use \Core\Controller;
+use \Core\Message;
+use \Models\User;
+
 class LoginController extends Controller
 {
 

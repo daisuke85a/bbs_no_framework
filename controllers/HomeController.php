@@ -1,5 +1,8 @@
 <?php
 
+use Core\Auth;
+use Core\Controller;
+
 class HomeController extends Controller
 {
     public function welcomeAction(): string
