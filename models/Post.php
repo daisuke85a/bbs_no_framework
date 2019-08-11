@@ -122,7 +122,7 @@ class Post
 
     public function fetch(int $postId): array
     {
-        //emailに該当するuserを抽出する(emailはUNIQUE)
+        //postIDに該当する投稿を抽出する(postIDはUNIQUE)
         $stmt = DB::$connect->prepare(
             'SELECT *, posts.id AS post_id FROM posts INNER JOIN users
         ON posts.user_id = users.id WHERE posts.id = :postId AND posts.valid = 1'
@@ -131,7 +131,13 @@ class Post
         $stmt->bindValue(':postId', $postId, \PDO::PARAM_INT);
         $stmt->execute();
 
-        return $stmt->fetch(\PDO::FETCH_ASSOC);
+        $return = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        if ($return === false) {
+            return [];
+        } else {
+            return $return;
+        }
 
     }
 
