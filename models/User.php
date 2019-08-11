@@ -17,15 +17,15 @@ class User
     {
         //1件のみSelectして件数が増えたときのパフォーマンスを向上させる
         $stmt = DB::$connect->prepare(
-            'SELECT id FROM users WHERE email =:email LIMIT 0'
+            'SELECT id FROM users WHERE email =:email LIMIT 1'
         );
 
         $stmt->bindValue(':email', $email, \PDO::PARAM_STR);
 
         $stmt->execute();
-        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-        return $result;
+        return !empty($result);
     }
 
     public function fetch(string $email): bool

@@ -49,20 +49,21 @@ class Application
     protected function findController(string $controller_class): Controller
     {
         //class_exists — クラスが定義済みかどうかを確認する
-        if (!class_exists($controller_class)) {
-            $controller_file = './controllers/' . $controller_class . '.php';
+        $controller_class_with_namespace = 'Controllers\\' . $controller_class;
 
+        if (!class_exists($controller_class_with_namespace)) {
+            $controller_file = './controllers/' . $controller_class . '.php';
             if (!is_readable($controller_file)) {
-                throw new Exception("exception");
+                throw new \Exception("exception");
             } else {
                 require_once $controller_file;
 
-                if (!class_exists($controller_class)) {
-                    throw new Exception("exception");
+                if (!class_exists($controller_class_with_namespace)) {
+                    throw new \Exception("exception");
                 }
             }
         }
 
-        return new $controller_class();
+        return new $controller_class_with_namespace();
     }
 }

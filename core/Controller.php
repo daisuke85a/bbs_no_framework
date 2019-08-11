@@ -53,7 +53,7 @@ abstract class Controller
     protected function forward404(): void
     {
         // TODO:しっかり例外処理を書く
-        throw new Exception();
+        throw new \Exception();
         // throw new HttpNotFoundException('Forwarded 404 page from ' . $this->controller_name . '/' . $this->action_name);
     }
 

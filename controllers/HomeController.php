@@ -1,7 +1,10 @@
 <?php
 
+namespace Controllers;
+
 use Core\Auth;
 use Core\Controller;
+use Models\Post;
 
 class HomeController extends Controller
 {

@@ -1,8 +1,11 @@
 <?php
 
+namespace Controllers;
+
 use \Core\Auth;
 use \Core\Controller;
 use \Core\Message;
+use \Models\Post;
 use \Models\User;
 
 class LoginController extends Controller
@@ -104,7 +107,7 @@ class LoginController extends Controller
 
         // emailが唯一であることの確認をする
         $user = new User();
-        if (!$user->existUser($_POST['email'])) {
+        if ($user->existUser($_POST['email'])) {
             Message::set('email', '登録済みのメールアドレスです。');
             $validation = false;
         }

@@ -1,8 +1,10 @@
 <?php
 
-use \Core\Auth;
-use \Core\DB;
-use \Core\Message;
+namespace models;
+
+use Core\Auth;
+use Core\DB;
+use Core\Message;
 
 class Post
 {
@@ -12,7 +14,7 @@ class Post
     public function getPagesNumber(): int
     {
         // 有効なポスト数の合計を求める
-        $stmt = \Core\DB::$connect->prepare(
+        $stmt = DB::$connect->prepare(
             'SELECT COUNT(*) FROM posts WHERE posts.valid = 1'
         );
         $stmt->execute();
@@ -86,11 +88,11 @@ class Post
         );
 
         // bindValueで明示的に型付けする（暗黙的にSTRに変換されるのを防ぐ）
-        $stmt->bindValue(':text', $text, PDO::PARAM_STR);
-        $stmt->bindValue(':image', $image, PDO::PARAM_STR);
-        $stmt->bindValue(':user_id', Auth::user()->id, PDO::PARAM_INT);
-        $stmt->bindValue(':reply_id', $_POST["reply_id"], PDO::PARAM_INT);
-        $stmt->bindValue(':valid', true, PDO::PARAM_BOOL);
+        $stmt->bindValue(':text', $text, \PDO::PARAM_STR);
+        $stmt->bindValue(':image', $image, \PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', Auth::user()->id, \PDO::PARAM_INT);
+        $stmt->bindValue(':reply_id', $_POST["reply_id"], \PDO::PARAM_INT);
+        $stmt->bindValue(':valid', true, \PDO::PARAM_BOOL);
 
         $stmt->execute();
 
@@ -101,7 +103,7 @@ class Post
     {
 
         //指定された投稿のページを取得する
-        $stmt = \Core\DB::$connect->prepare(
+        $stmt = DB::$connect->prepare(
             'SELECT *, posts.id AS post_id FROM posts INNER JOIN users ON posts.user_id = users.id WHERE posts.valid = 1 ORDER BY created_at DESC LIMIT :limitFirst , :limitEnd'
         );
 
