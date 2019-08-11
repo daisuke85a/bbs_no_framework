@@ -46,7 +46,10 @@ class Auth
         }
 
         //ログイン処理をする
+        //セッションハイジャックを防ぐため、ログイン時にセッションIDを再生成する
+        session_regenerate_id(true);
         $_SESSION['user'] = $user;
+
         return true;
     }
 
