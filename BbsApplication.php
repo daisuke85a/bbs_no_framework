@@ -1,6 +1,6 @@
 <?php
 
-use Core\Application as Application;
+use Core\Application;
 
 // require 'core/Application.php';
 
