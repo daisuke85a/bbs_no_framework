@@ -38,7 +38,8 @@ class PostController extends Controller
             $post = new Post();
             $post = $post->fetch($params['id']);
 
-            if ($post['valid'] == 1) {
+            // 有効な投稿が取得できたら表示
+            if (!empty($post)) {
                 $replyPosts = new Post();
                 $replyPosts = $replyPosts->fetchReplay($params['id']);
 
@@ -49,7 +50,9 @@ class PostController extends Controller
                     ],
                     'ShowPost.php'
                 );
+
             } else {
+                // 有効な投稿が取得できなかったらルートフォルダにリダイレクト
                 // エラーメッセージ表示は無い（表示ボタンを非表示にし、通常はありえない操作になるため）
                 return $this->redirect('/');
             }
