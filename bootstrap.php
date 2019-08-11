@@ -8,3 +8,5 @@ $loader = new ClassLoader();
 $loader->registerDir(dirname(__FILE__) . '');
 
 $loader->register();
+
+\Core\Auth::setUserClass('\Models\User');

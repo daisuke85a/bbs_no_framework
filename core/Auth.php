@@ -7,6 +7,15 @@ use models;
 class Auth
 {
 
+    private static $user_class = "";
+
+    // 各アプリで独自のUserクラスを使えるように、利用者からクラス名を設定可能とする
+    // 他メソッドを使う前に必ず設定すること。
+    public static function setUserClass(string $user_class)
+    {
+        self::$user_class = $user_class;
+    }
+
     public static function releaseAuthenticate(): void
     {
         // $_SESSION['user'] = null;
@@ -21,8 +30,8 @@ class Auth
 
     public static function authenticate(string $email, string $password): bool
     {
-
-        $user = new \Models\User();
+        // 本クラスの利用者が事前に設定した
+        $user = new self::$user_class();
 
         //userが見つからなかったらエラーを返す
         if (!$user->fetch($email)) {
