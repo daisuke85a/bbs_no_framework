@@ -69,7 +69,7 @@ class Post
 
     }
 
-    public function insert($text, $reply_id = null, $image = null): bool
+    public function insert(string $text, int $reply_id = null, string $image = null): bool
     {
 
         if ($_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {

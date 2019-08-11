@@ -13,10 +13,10 @@ class Message
         return true;
     }
 
-    public static function get()
+    public static function get(): array
     {
         if (empty(($_SESSION['_msg']))) {
-            return null;
+            return [];
         }
         return $_SESSION['_msg'];
     }
@@ -26,7 +26,7 @@ class Message
         return $this->str;
     }
 
-    public static function set(string $key, string $msg)
+    public static function set(string $key, string $msg): void
     {
         $MsgInstance = new Message();
         $MsgInstance->str = $msg;
@@ -40,7 +40,7 @@ class Message
     }
 
     // メッセージをセットした後の、次のリクエストに対するResponseをしたあとで、クリアする
-    public static function sendRequestFlush()
+    public static function sendRequestFlush(): void
     {
         if (empty(($_SESSION['_msg']))) {
             return;

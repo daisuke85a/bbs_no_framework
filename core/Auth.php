@@ -3,7 +3,7 @@
 class Auth
 {
 
-    public static function releaseAuthenticate()
+    public static function releaseAuthenticate(): void
     {
         // $_SESSION['user'] = null;
         unset($_SESSION['user']);

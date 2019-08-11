@@ -2,7 +2,7 @@
 
 class PostController extends Controller
 {
-    public function showPageAction($params)
+    public function showPageAction(array $params): string
     {
         // var_dump($params);
         //ログイン中
@@ -24,7 +24,7 @@ class PostController extends Controller
         }
     }
 
-    public function showAction($params)
+    public function showAction(array $params): string
     {
         //ログイン中
         if (Auth::check()) {
@@ -122,7 +122,7 @@ class PostController extends Controller
         return $validation;
     }
 
-    public function createAction()
+    public function createAction(): string
     {
 
         //ログイン中
@@ -140,7 +140,7 @@ class PostController extends Controller
         }
     }
 
-    public function deleteAction($params)
+    public function deleteAction(array $params): string
     {
         //ログイン中
         if (Auth::check()) {

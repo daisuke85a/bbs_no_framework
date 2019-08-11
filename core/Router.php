@@ -2,19 +2,19 @@
 
 class Router
 {
-    private $routes;
+    private $routes = [];
 
     //$definitionsにはこういうのがはいる
     // [ ['/' => ['controller' => 'home', 'action'=> 'index'] ],
     //   ['/user/edit' =>  ['controller' => 'user', 'action'=> 'edit']
     //   ['/user/:id' =>   ['controller' => 'user', 'action'=> 'show'] ]
-    public function __construct($definitions)
+    public function __construct(array $definitions)
     {
 
         $this->routes = $this->compileRoutes($definitions);
     }
 
-    public function compileRoutes($definitions)
+    public function compileRoutes(array $definitions): array
     {
         $routes = [];
 
@@ -43,7 +43,7 @@ class Router
         return $routes;
     }
 
-    public function resolve($path_info)
+    public function resolve(string $path_info): array
     {
 
         // PATH_INFOの先頭がスラッシュでない場合は、先頭にスラッシュを付与する
@@ -64,7 +64,7 @@ class Router
         }
 
         //ルーティングに１つもマッチしない場合はfalseを返す
-        return false;
+        return [];
     }
 
 }
