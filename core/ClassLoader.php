@@ -23,13 +23,8 @@ class ClassLoader
         foreach ($this->dirs as $dir) {
 
             $classNamespace = ltrim($class, '\\');
-            // var_dump("classNamespace");
-            // var_dump($classNamespace);
             $file = $dir . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $classNamespace) . '.php';
-            // var_dump("file");
-            // var_dump($file);
 
-            // $file = $dir . '/' . $class . '.php';
             if (is_readable($file)) {
                 require $file;
 

@@ -14,7 +14,7 @@ class Auth
         unset($_SESSION['_token']);
     }
 
-    public static function user(): \models\User
+    public static function user(): \Models\User
     {
         return $_SESSION['user'];
     }
@@ -38,7 +38,6 @@ class Auth
 
         //ログイン処理をする
         $_SESSION['user'] = $user;
-
         return true;
     }
 

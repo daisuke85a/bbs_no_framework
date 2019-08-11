@@ -50,8 +50,9 @@ class Message
 
         foreach ($_SESSION['_msg'] as $key => $msg) {
             //Messageオブジェクト以外の場合はunsetする
+
             if (gettype($msg) === "object") {
-                if (get_class($msg) !== 'Message') {
+                if (get_class($msg) !== 'core\Message') {
                     unset($_SESSION['_msg'][$key]);
                     continue;
                 }
@@ -64,6 +65,5 @@ class Message
                 unset($_SESSION['_msg'][$key]);
             }
         }
-
     }
 }

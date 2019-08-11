@@ -7,7 +7,6 @@ class HomeController extends Controller
 {
     public function welcomeAction(): string
     {
-
         //ログイン中
         if (Auth::check()) {
             //1ページ目を表示
