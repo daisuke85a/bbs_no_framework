@@ -23,7 +23,6 @@ class CsrfToken
         } else { //トークンがもともとあればそれを使う
             $token = $_SESSION['_token'];
         }
-        // var_dump($_SESSION['_token']);
 
         return $token;
     }

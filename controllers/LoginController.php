@@ -93,11 +93,16 @@ class LoginController extends Controller
         //passwordのバリデーション
         //30文字以上の場合はNG
         if (mb_strlen($_POST['password'], mb_internal_encoding()) > 30) {
-            Message::set('password', 'メールアドレスは30文字未満にしてください。');
+            Message::set('password', 'パスワードは30文字未満にしてください。');
             $validation = false;
         }
 
-        //TODO: emailが唯一であることの確認をする
+        // emailが唯一であることの確認をする
+        $user = new User();
+        if (!$user->existUser($_POST['email'])) {
+            Message::set('email', '登録済みのメールアドレスです。');
+            $validation = false;
+        }
 
         return $validation;
 
