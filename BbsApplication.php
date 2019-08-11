@@ -1,5 +1,9 @@
 <?php
 
+use Core\Application;
+
+// require 'core/Application.php';
+
 class BbsApplication extends Application
 {
     protected function registerRoutes(): array

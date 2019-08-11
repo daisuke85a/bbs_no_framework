@@ -1,4 +1,11 @@
 <?php
+
+namespace models;
+
+use Core\Auth;
+use Core\DB;
+use Core\Message;
+
 class Post
 {
     //1ページあたりのポスト数
@@ -81,11 +88,11 @@ class Post
         );
 
         // bindValueで明示的に型付けする（暗黙的にSTRに変換されるのを防ぐ）
-        $stmt->bindValue(':text', $text, PDO::PARAM_STR);
-        $stmt->bindValue(':image', $image, PDO::PARAM_STR);
-        $stmt->bindValue(':user_id', Auth::user()->id, PDO::PARAM_INT);
-        $stmt->bindValue(':reply_id', $_POST["reply_id"], PDO::PARAM_INT);
-        $stmt->bindValue(':valid', true, PDO::PARAM_BOOL);
+        $stmt->bindValue(':text', $text, \PDO::PARAM_STR);
+        $stmt->bindValue(':image', $image, \PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', Auth::user()->id, \PDO::PARAM_INT);
+        $stmt->bindValue(':reply_id', $_POST["reply_id"], \PDO::PARAM_INT);
+        $stmt->bindValue(':valid', true, \PDO::PARAM_BOOL);
 
         $stmt->execute();
 
@@ -104,11 +111,12 @@ class Post
         // 参考：http: //blog.a-way-out.net/blog/2013/12/15/pdo-prepare-statement-numeric-literal/
         // 参考：https: //blog.tokumaru.org/2009/09/implicit-type-conversion-of-SQL-is-trap-full.html#p01
 
-        $stmt->bindValue(':limitFirst', (($page - 1) * $this->postPerPage), PDO::PARAM_INT);
-        $stmt->bindValue(':limitEnd', $this->postPerPage, PDO::PARAM_INT);
+        $stmt->bindValue(':limitFirst', (($page - 1) * $this->postPerPage), \PDO::PARAM_INT);
+        $stmt->bindValue(':limitEnd', $this->postPerPage, \PDO::PARAM_INT);
 
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
     }
 
@@ -120,10 +128,10 @@ class Post
         ON posts.user_id = users.id WHERE posts.id = :postId AND posts.valid = 1'
         );
 
-        $stmt->bindValue(':postId', $postId, PDO::PARAM_INT);
+        $stmt->bindValue(':postId', $postId, \PDO::PARAM_INT);
         $stmt->execute();
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
 
     }
 
@@ -136,10 +144,10 @@ class Post
                 ON posts.user_id = users.id WHERE posts.reply_id = :postId AND posts.valid = 1 ORDER BY created_at DESC'
         );
 
-        $stmt->bindValue(':postId', $postId, PDO::PARAM_INT);
+        $stmt->bindValue(':postId', $postId, \PDO::PARAM_INT);
         $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
     }
 
@@ -150,7 +158,7 @@ class Post
             'UPDATE posts SET valid = 0 WHERE id = :id'
         );
 
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':id', $id, \PDO::PARAM_INT);
         $stmt->execute();
 
         return true;

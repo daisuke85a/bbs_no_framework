@@ -1,10 +1,15 @@
 <?php
 
+namespace Controllers;
+
+use Core\Auth;
+use Core\Controller;
+use Models\Post;
+
 class HomeController extends Controller
 {
     public function welcomeAction(): string
     {
-
         //ログイン中
         if (Auth::check()) {
             //1ページ目を表示

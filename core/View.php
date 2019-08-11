@@ -1,5 +1,7 @@
 <?php
 
+namespace core;
+
 class View
 {
     protected $defaults = [];
@@ -25,6 +27,7 @@ class View
 
     public function render(string $view_file, array $_variables = [], string $_layout = null): string
     {
+
         $_file = '../views/' . $view_file;
 
         /* ************************************** */

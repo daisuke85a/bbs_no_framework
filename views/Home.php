@@ -4,8 +4,8 @@
 <p><a href="/logout">ログアウト</a></p>
 
 <?php
-if (!empty(Message::get())) {
-    foreach (Message::get() as $key => $msg) {
+if (!empty(\Core\Message::get())) {
+    foreach (\Core\Message::get() as $key => $msg) {
         echo ("<li>");
         $this->escapeEcho($msg->getStr());
         echo ("</li>");
@@ -14,10 +14,10 @@ if (!empty(Message::get())) {
 ?>
 
 <h3>なまえ</h3>
-<p><?php $this->escapeEcho(Auth::user()->name);?></p>
+<p><?php $this->escapeEcho(\Core\Auth::user()->name);?></p>
 
 <form action="/post/create" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="_token" value="<?=CsrfToken::publication()?>">
+    <input type="hidden" name="_token" value="<?=\Core\CsrfToken::publication()?>">
     <input type="text" name="text" id="text" placeholder="投稿用のテキストを140文字以内で書いてください" value="">
     <input type="file" id="image" name="image">
     <input type="submit" value="投稿">

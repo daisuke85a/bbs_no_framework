@@ -1,5 +1,7 @@
 <?php
 
+namespace core;
+
 //クラスを呼び出した際にそのクラスがPHP上に読み込まれていない場合、自動的にファイルの読み込みを行う
 class ClassLoader
 {
@@ -19,7 +21,10 @@ class ClassLoader
     public function loadClass(string $class): void
     {
         foreach ($this->dirs as $dir) {
-            $file = $dir . '/' . $class . '.php';
+
+            $classNamespace = ltrim($class, '\\');
+            $file = $dir . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $classNamespace) . '.php';
+
             if (is_readable($file)) {
                 require $file;
 

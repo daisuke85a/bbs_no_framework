@@ -1,5 +1,7 @@
 <?php
 
+namespace core;
+
 class CsrfToken
 {
     public static function check(): bool

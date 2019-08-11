@@ -1,5 +1,12 @@
 <?php
 
+namespace Controllers;
+
+use Core\Auth;
+use Core\Controller;
+use Core\Message;
+use Models\Post;
+
 class PostController extends Controller
 {
     public function showPageAction(array $params): string
