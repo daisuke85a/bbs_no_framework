@@ -8,10 +8,20 @@ use \Core\Message;
 use \Models\Post;
 use \Models\User;
 
+/**
+ * ログイン/ログアウト/サインアップのコントローラ
+ */
 class LoginController extends Controller
 {
 
-    public function login(string $email, string $password): string
+    /**
+     * ログインの実行
+     *
+     * @param string $email
+     * @param string $password
+     * @return string
+     */
+    private function login(string $email, string $password): string
     {
         //ログイン処理
         if (Auth::authenticate($email, $password)) {
@@ -24,6 +34,11 @@ class LoginController extends Controller
         return $this->redirect("/");
     }
 
+    /**
+     * ログイン実行前の検証。
+     *
+     * @return boolean
+     */
     private function validateLogin(): bool
     {
         //入力バリデーションは未入力チェックだけする
@@ -44,6 +59,11 @@ class LoginController extends Controller
 
     }
 
+    /**
+     * ログインの実行
+     *
+     * @return string
+     */
     public function loginAction(): string
     {
         //ログイン処理
@@ -54,6 +74,11 @@ class LoginController extends Controller
         }
     }
 
+    /**
+     * ログアウトの実行
+     *
+     * @return string
+     */
     public function logoutAction(): string
     {
         //ログアウト処理
@@ -64,6 +89,11 @@ class LoginController extends Controller
 
     }
 
+    /**
+     * サインアップ（アカウント登録）前に行う検証
+     *
+     * @return boolean
+     */
     private function validateRegister(): bool
     {
 
@@ -116,6 +146,11 @@ class LoginController extends Controller
 
     }
 
+    /**
+     * サインアップ（アカウント登録）処理
+     *
+     * @return string
+     */
     public function registerAction(): string
     {
         //ユーザー登録処理
@@ -131,9 +166,13 @@ class LoginController extends Controller
         return $this->redirect('/signup');
     }
 
+    /**
+     * サインアップ（アカウント登録）画面表示処理
+     *
+     * @return string
+     */
     public function signupViewAction(): string
     {
-        //サインアップ画面表示処理
 
         return $this->render(
             [],

@@ -7,8 +7,18 @@ use Core\Controller;
 use Core\Message;
 use Models\Post;
 
+/**
+ * 投稿に関するコントローラ
+ */
 class PostController extends Controller
 {
+    /**
+     * 指定されたページを表示する。
+     * ページネーションに対応している。
+     *
+     * @param array $params
+     * @return string
+     */
     public function showPageAction(array $params): string
     {
         //ログイン中
@@ -30,11 +40,17 @@ class PostController extends Controller
         }
     }
 
+    /**
+     * IDに指定した投稿を表示する
+     *
+     * @param array $params
+     * @return string
+     */
     public function showAction(array $params): string
     {
         //ログイン中
         if (Auth::check()) {
-            //全投稿を表示
+            //IDに相当する投稿を表示する
             $post = new Post();
             $post = $post->fetch($params['id']);
 
@@ -65,6 +81,11 @@ class PostController extends Controller
 
     }
 
+    /**
+     * 投稿を反映する前にポストされたパラメータの有効性を検証する
+     *
+     * @return boolean
+     */
     private function validateCreateAction(): bool
     {
         $validation = true;
@@ -131,6 +152,11 @@ class PostController extends Controller
         return $validation;
     }
 
+    /**
+     * ポストされた投稿を作成する。
+     *
+     * @return string
+     */
     public function createAction(): string
     {
 
@@ -149,6 +175,12 @@ class PostController extends Controller
         }
     }
 
+    /**
+     * 指定された投稿を削除する
+     *
+     * @param array $params
+     * @return string
+     */
     public function deleteAction(array $params): string
     {
         //ログイン中

@@ -6,8 +6,17 @@ use Core\Auth;
 use Core\Controller;
 use Models\Post;
 
+/**
+ * ルートパスに相当するコントローラ
+ * 本アプリケーションの基盤となる制御をする
+ */
 class HomeController extends Controller
 {
+    /**
+     * ホーム画面
+     *
+     * @return string
+     */
     public function welcomeAction(): string
     {
         //ログイン中
@@ -23,6 +32,7 @@ class HomeController extends Controller
                 ],
                 'Home.php'
             );
+            //未ログイン
         } else {
             return $this->render(
                 [],
