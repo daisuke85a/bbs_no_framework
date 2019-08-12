@@ -26,17 +26,28 @@ class RouterTest extends TestCase
             [
                 '/' => ['controller' => 'home', 'action' => 'welcome'],
                 '/login' => ['controller' => 'login', 'action' => 'login'],
-                '/logout' => ['controller' => 'login', 'action' => 'logout'],
-                '/signup' => ['controller' => 'login', 'action' => 'signupView'],
-                '/register' => ['controller' => 'login', 'action' => 'register'],
-                '/post/create' => ['controller' => 'post', 'action' => 'create'],
                 '/post/:id/delete' => ['controller' => 'post', 'action' => 'delete'],
                 '/post/:id' => ['controller' => 'post', 'action' => 'show'],
-                '/page/:page' => ['controller' => 'post', 'action' => 'showPage'],
             ]
         );
 
-        $router->resolve("/");
+        $result = $router->resolve("/");
+        $this->assertSame($result['controller'], "home");
+        $this->assertSame($result['action'], "welcome");
+
+        $result = $router->resolve("/login");
+        $this->assertSame($result['controller'], "login");
+        $this->assertSame($result['action'], "login");
+
+        $result = $router->resolve("/post/1");
+        $this->assertSame($result['controller'], "post");
+        $this->assertSame($result['action'], "show");
+        $this->assertSame($result['id'], "1");
+
+        $result = $router->resolve("/post/99/delete");
+        $this->assertSame($result['controller'], "post");
+        $this->assertSame($result['action'], "delete");
+        $this->assertSame($result['id'], "99");
 
     }
 }
