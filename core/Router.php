@@ -65,7 +65,9 @@ class Router
             }
         }
 
-        //ルーティングに１つもマッチしない場合はfalseを返す
+        //ルーティングに１つもマッチしない場合は例外を発生させる
+        throw new HttpNotFoundException('Forwarded 404 page from ' . $path_info);
+
         return [];
     }
 
