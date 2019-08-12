@@ -2,32 +2,52 @@
 
 namespace core;
 
-use models;
-
 class Auth
 {
 
     private static $user_class = "";
 
-    // 各アプリで独自のUserクラスを使えるように、利用者からクラス名を設定可能とする
-    // 他メソッドを使う前に必ず設定すること。
+    /**
+     * 認証時にSessionに記憶させるユーザークラス名を設定する。
+     * 各アプリで独自のUserクラスを使えるように、利用者にてクラス名を設定可能とする
+     * 他メソッドを使う前に必ず設定すること。
+     * @param string $user_class
+     * @return void
+     */
     public static function setUserClass(string $user_class)
     {
         self::$user_class = $user_class;
     }
 
+    /**
+     * 認証を解除する
+     *
+     * @return void
+     */
     public static function releaseAuthenticate(): void
     {
-        // $_SESSION['user'] = null;
         unset($_SESSION['user']);
         unset($_SESSION['_token']);
     }
 
-    public static function user(): \Models\User
+    /**
+     * 認証済みのユーザーを返却する
+     * 帰り値のクラスはsetUserClassで設定したクラスに動的に変わる
+     *
+     * @return void
+     */
+    public static function user()
     {
         return $_SESSION['user'];
     }
 
+    /**
+     * 認証する
+     *
+     * @param string $email
+     * @param string $password
+     * @return boolean
+     */
     public static function authenticate(string $email, string $password): bool
     {
         // 本クラスの利用者が事前に設定した
@@ -53,6 +73,12 @@ class Auth
         return true;
     }
 
+    /**
+     * ユーザー認証済みかチェックする
+     *
+     * @param User $user
+     * @return boolean
+     */
     public static function check(User $user = null): bool
     {
 

@@ -2,7 +2,14 @@
 
 namespace core;
 
-class Application
+/**
+ * アプリケーションの本体となるクラス
+ * アプリ作成者は以下のように使用すること
+ *  1.本クラスを継承したクラスを作成する
+ *  2.registerRoutes()にてルーティングを登録する
+ *  3.run()にて実行する
+ */
+abstract class Application
 {
     //TODO: 独自クラスの変数宣言時に型づけするのはどうすればいいか？PHPではまだできない？
     private $router;
@@ -10,6 +17,9 @@ class Application
     //エラーメッセージを表示させたくない場合はfalseに設定すること
     protected $isDebugMode = true;
 
+    /**
+     * コンストラクタ
+     */
     public function __construct()
     {
         $this->router = new Router($this->registerRoutes());
@@ -19,11 +29,22 @@ class Application
         ini_set('display_errors', 'On');
     }
 
+    /**
+     * ルーティングを登録する。
+     * 継承先でオーバーライドすること。
+     *
+     * @return array
+     */
     protected function registerRoutes(): array
     {
         return [];
     }
 
+    /**
+     * アプリケーションを実行する
+     *
+     * @return void
+     */
     public function run(): void
     {
 
@@ -54,6 +75,12 @@ class Application
         Message::sendRequestFlush();
     }
 
+    /**
+     * 指定されたコントローラー名のクラスをnewし返却する
+     *
+     * @param string $controller_class
+     * @return Controller
+     */
     private function findController(string $controller_class): Controller
     {
         //class_exists — クラスが定義済みかどうかを確認する
@@ -75,6 +102,12 @@ class Application
         return new $controller_class_with_namespace();
     }
 
+    /**
+     * 404ページを表示する
+     *
+     * @param HttpNotFoundException $e
+     * @return void
+     */
     private function render404Page(HttpNotFoundException $e): void
     {
         Response::$status_code = 404;

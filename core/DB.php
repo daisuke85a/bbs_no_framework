@@ -4,9 +4,13 @@ namespace core;
 
 class DB
 {
-    // 1つのDBしか接続しない前提とする
     static $connect;
 
+    /**
+     * DBを接続する。
+     * DBは1つしか接続しない前提とする
+     * @return void
+     */
     public static function connect(): void
     {
         self::$connect = new \PDO(DB_DSN, DB_USER, DB_PASSWORD, DB_OPTIONS);
