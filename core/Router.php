@@ -2,21 +2,37 @@
 
 namespace core;
 
+/**
+ * ルーティングを担う。
+ * 前提条件：publicフォルダに適切な.htaccessを設置すること。
+ */
 class Router
 {
     private $routes = [];
 
-    //$definitionsにはこういうのがはいる
-    // [ ['/' => ['controller' => 'home', 'action'=> 'index'] ],
-    //   ['/user/edit' =>  ['controller' => 'user', 'action'=> 'edit']
-    //   ['/user/:id' =>   ['controller' => 'user', 'action'=> 'show'] ]
+    /**
+     * ルーティングの定義を設定する。
+     * ルーティング定義の例：
+     *  [ ['/' => ['controller' => 'home', 'action'=> 'index'] ],
+     *  ['/user/edit' =>  ['controller' => 'user', 'action'=> 'edit']
+     *  ['/user/:id' =>   ['controller' => 'user', 'action'=> 'show'] ]
+     *
+     * 動的パラメータには最初に:をつける
+     * Applicationを継承したクラスで呼ばれる想定。
+     * @param array $definitions
+     */
     public function __construct(array $definitions)
     {
-
         $this->routes = $this->compileRoutes($definitions);
     }
 
-    public function compileRoutes(array $definitions): array
+    /**
+     * ルーティング定義を動的パラメータを勘案した正規表現に変換する
+     *
+     * @param array $definitions
+     * @return array
+     */
+    private function compileRoutes(array $definitions): array
     {
         $routes = [];
 
@@ -45,6 +61,17 @@ class Router
         return $routes;
     }
 
+    /**
+     * ルーティング定義配列にパスをマッチングし、ヒットしたルーティング定義を返却する
+     * Applicationクラスから呼ばれる。
+     *
+     * 返却する値：
+     * $params['controller']にコントローラ名が格納される
+     * $params['action']にアクション名が格納される
+     *
+     * @param string $path_info
+     * @return array
+     */
     public function resolve(string $path_info): array
     {
 
@@ -65,7 +92,9 @@ class Router
             }
         }
 
-        //ルーティングに１つもマッチしない場合はfalseを返す
+        //ルーティングに１つもマッチしない場合は例外を発生させる
+        throw new HttpNotFoundException('Forwarded 404 page from ' . $path_info);
+
         return [];
     }
 

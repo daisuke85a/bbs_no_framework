@@ -9,6 +9,12 @@ class Response
     public static $status_text = 'OK';
     public static $http_headers = [];
 
+    /**
+     * HTTPのResponseを返信する。
+     * Applicationクラスからコールされる。
+     *
+     * @return void
+     */
     public static function send(): void
     {
         // header — 生の HTTP ヘッダを送信する

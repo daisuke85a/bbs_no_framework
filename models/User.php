@@ -4,6 +4,9 @@ namespace models;
 
 use \Core\DB;
 
+/**
+ * ユーザーデータを管理するクラス
+ */
 class User
 {
 
@@ -12,7 +15,12 @@ class User
     public $password;
     public $email;
 
-    //ユーザーが存在するか確認する
+    /**
+     * ユーザーが存在するか確認する
+     *
+     * @param string $email
+     * @return boolean
+     */
     public function existUser(string $email): bool
     {
         //1件のみSelectして件数が増えたときのパフォーマンスを向上させる
@@ -28,6 +36,12 @@ class User
         return !empty($result);
     }
 
+    /**
+     * ユーザーデータを取得する
+     *
+     * @param string $email
+     * @return boolean
+     */
     public function fetch(string $email): bool
     {
         //emailに該当するuserを抽出する(emailはUNIQUE)
@@ -53,6 +67,14 @@ class User
 
     }
 
+    /**
+     * ユーザーデータを挿入する
+     *
+     * @param string $name
+     * @param string $password
+     * @param string $email
+     * @return void
+     */
     public function insert(string $name, string $password, string $email): void
     {
 

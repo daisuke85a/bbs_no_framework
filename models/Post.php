@@ -6,11 +6,20 @@ use Core\Auth;
 use Core\DB;
 use Core\Message;
 
+/**
+ * 投稿データを管理するクラス
+ */
 class Post
 {
     //1ページあたりのポスト数
     public $postPerPage = 10;
 
+    /**
+     * 最大ページ数を返す
+     * 現在の有効な投稿数と、ページ毎に表示する投稿数を考慮して算出する
+     *
+     * @return integer
+     */
     public function getPagesNumber(): int
     {
         // 有効なポスト数の合計を求める
@@ -25,6 +34,13 @@ class Post
 
     }
 
+    /**
+     * 投稿された画像データを一時保存場所から正規の保存場所に移動する。
+     * ファイル名を返す。
+     * ファイル名はファイルデータを元に作ったsha256のhash値とする（同名ファイルの投稿により上書きされないように）
+     *
+     * @return string
+     */
     private function moveImageFile(): string
     {
         $uploadDir = $_SERVER["DOCUMENT_ROOT"] . '/upload/';
@@ -76,6 +92,14 @@ class Post
 
     }
 
+    /**
+     * 投稿をDBに挿入する
+     *
+     * @param string $text
+     * @param integer $reply_id
+     * @param string $image
+     * @return boolean
+     */
     public function insert(string $text, int $reply_id = null, string $image = null): bool
     {
 
@@ -99,10 +123,15 @@ class Post
         return true;
     }
 
+    /**
+     * 指定された投稿のページを取得する
+     *
+     * @param integer $page
+     * @return array
+     */
     public function fetchPage(int $page): array
     {
 
-        //指定された投稿のページを取得する
         $stmt = DB::$connect->prepare(
             'SELECT *, posts.id AS post_id FROM posts INNER JOIN users ON posts.user_id = users.id WHERE posts.valid = 1 ORDER BY created_at DESC LIMIT :limitFirst , :limitEnd'
         );
@@ -120,9 +149,14 @@ class Post
 
     }
 
+    /**
+     * postIDに該当する投稿を抽出する(postIDはUNIQUE)
+     *
+     * @param integer $postId
+     * @return array
+     */
     public function fetch(int $postId): array
     {
-        //postIDに該当する投稿を抽出する(postIDはUNIQUE)
         $stmt = DB::$connect->prepare(
             'SELECT *, posts.id AS post_id FROM posts INNER JOIN users
         ON posts.user_id = users.id WHERE posts.id = :postId AND posts.valid = 1'
@@ -141,6 +175,12 @@ class Post
 
     }
 
+    /**
+     * postIdの投稿に対する返信を取得する
+     *
+     * @param integer $postId
+     * @return array
+     */
     public function fetchReplay(int $postId): array
     {
         //ある投稿のリプライを全て取得する
@@ -157,6 +197,14 @@ class Post
 
     }
 
+    /**
+     * postIdの投稿データを削除する
+     * 返信投稿との関連を勘案して、論理削除(非表示)とする
+     * TODO: 本来であれば画像データの削除、投稿内容を無効値で上書きしたいところだが対応できていない。
+     *
+     * @param integer $id
+     * @return boolean
+     */
     public function delete(int $id): bool
     {
 
