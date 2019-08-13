@@ -30,6 +30,11 @@ PHP Unitによる自動試験に対応している
 PHP7.3.1  
 MySQL8.0.14  
 Google Chrome最新バージョン(2019/08/13時点)
+apache
 
 # 利用方法
-書き途中
+書き途中  
+1. apacheのドキュメントルートへ移動する  
+2. $ git clone https://github.com/daisuke85a/bbs_no_framework.git
+3. $ mysql -u root -p < sql.txt を実行する
+4. 

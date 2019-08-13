@@ -2,10 +2,11 @@
 //本来はgit上にパスワード等の情報を載せるのはOUTだが、練習用なので今回はヨシ(๑•̀ㅂ•́)و✧とする
 
 mysql -u bbs_no_framework_user -p
-use bbs_no_framework;
 
 CREATE DATABASE bbs_no_framework CHARACTER SET utf8mb4;
-GRANT ALL PRIVILEGES ON bbs_no_framework.* TO 'bbs_no_framework_user'@'localhost' IDENTIFIED BY 'bbs_no_framework_user' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON bbs_no_framework.* TO 'root'@'localhost' IDENTIFIED BY 'root' WITH GRANT OPTION;
+
+use bbs_no_framework;
 
 CREATE TABLE users(
     id INT UNIQUE NOT NULL AUTO_INCREMENT,
