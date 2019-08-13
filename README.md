@@ -30,11 +30,14 @@ PHP Unitによる自動試験に対応している
 PHP7.3.1  
 MySQL8.0.14  
 Google Chrome最新バージョン(2019/08/13時点)
-apache
+Mac OS ローカル環境
 
 # 利用方法
-書き途中  
-1. apacheのドキュメントルートへ移動する  
-2. $ git clone https://github.com/daisuke85a/bbs_no_framework.git
-3. $ mysql -u root -p < sql.txt を実行する
-4. 
+1. $ git clone https://github.com/daisuke85a/bbs_no_framework.git
+2. cd bbs_no_framework
+3. $ cp .env.example .env
+4. $ mysql -u root -p < sql.txt
+5. $ cd public
+6. $ php -S localhost:8000
+
+TODO: paiza cloud上でも動作するよう書き換えたい
