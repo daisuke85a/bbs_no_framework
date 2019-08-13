@@ -132,6 +132,7 @@ abstract class Application
 </body>
 
 </html>
-EOF);
+EOF
+        );
     }
 }
