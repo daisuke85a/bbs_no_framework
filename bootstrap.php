@@ -2,11 +2,11 @@
 
 //オートロードする
 require '../core/ClassLoader.php';
-use Core\ClassLoader;
+use core\ClassLoader;
 
 $loader = new ClassLoader();
 $loader->registerDir(dirname(__FILE__) . '');
 
 $loader->register();
 
-\Core\Auth::setUserClass('\Models\User');
+\core\Auth::setUserClass('\models\User');

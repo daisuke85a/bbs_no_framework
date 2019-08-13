@@ -1,0 +1,25 @@
+
+CREATE DATABASE bbs_no_framework CHARACTER SET utf8mb4;
+GRANT ALL PRIVILEGES ON bbs_no_framework.* TO 'root'@'localhost' IDENTIFIED BY 'root' WITH GRANT OPTION;
+
+use bbs_no_framework;
+
+CREATE TABLE users(
+    id INT UNIQUE NOT NULL AUTO_INCREMENT,
+    password VARCHAR(120) NOT NULL ,
+    name VARCHAR(120) NOT NULL ,
+    email VARCHAR(120) UNIQUE  NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE posts(
+    id INT UNIQUE NOT NULL AUTO_INCREMENT,
+    text VARCHAR(600) NOT NULL ,
+    image VARCHAR(600),
+    user_id INT,
+    reply_id INT,
+    PRIMARY KEY (id),
+    valid tinyint(1),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY fk_user(user_id) REFERENCES users(id)
+);
