@@ -31,13 +31,23 @@ PHP7.3.1
 MySQL8.0.14  
 Google Chrome最新バージョン(2019/08/13時点)
 Mac OS ローカル環境
+Ubuntu (PaizaCloud,PHP,MySQL設定) (2019/08/13現在)
 
 # 利用方法
-1. $ git clone https://github.com/daisuke85a/bbs_no_framework.git
-2. cd bbs_no_framework
-3. $ cp .env.example .env
-4. $ mysql -u root -p < sql.txt
-5. $ cd public
-6. $ php -S localhost:8000
-
-TODO: paiza cloud上でも動作するよう書き換えたい
+1. ソースコードをCloneする
+   1. $ git clone https://github.com/daisuke85a/bbs_no_framework.git
+2. (Apacheで動作させる場合)Apacheの設定をする
+   1. ドキュメントルートを、./bbs_no_framework/publicに設定する
+   2. 対象のドキュメントルートのAllowOverride がAllにする
+   3. mod_rewrite.cを有効にする
+3. .envファイルを作成する
+   1. cd bbs_no_framework
+   2. $ cp .env.example .env
+   3. 必要に応じて.envを修正する(通常はそのままでOK)
+4. データベースを準備する
+   1. 必要に応じてsql.txtを修正する(通常はそのままでOK)
+   2. $ mysql -u root -p < sql.txt
+5. (ローカル環境で動かす場合)PHPのビルドインサーバを起動する
+   1. $ cd public
+   2. $ php -S localhost:8000
+6. 動作するはず。
