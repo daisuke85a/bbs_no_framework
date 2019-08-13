@@ -2,9 +2,9 @@
 
 namespace Controllers;
 
-use Core\Auth;
-use Core\Controller;
-use Models\Post;
+use core\Auth;
+use core\Controller;
+use models\Post;
 
 /**
  * ルートパスに相当するコントローラ

@@ -84,7 +84,7 @@ abstract class Application
     private function findController(string $controller_class): Controller
     {
         //class_exists — クラスが定義済みかどうかを確認する
-        $controller_class_with_namespace = 'Controllers\\' . $controller_class;
+        $controller_class_with_namespace = 'controllers\\' . $controller_class;
 
         if (!class_exists($controller_class_with_namespace)) {
             $controller_file = './controllers/' . $controller_class . '.php';
@@ -133,6 +133,6 @@ abstract class Application
 
 </html>
 EOF
-        );
+);
     }
 }
