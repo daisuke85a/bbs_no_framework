@@ -2,9 +2,9 @@
 
 namespace models;
 
-use Core\Auth;
-use Core\DB;
-use Core\Message;
+use core\Auth;
+use core\DB;
+use core\Message;
 
 /**
  * 投稿データを管理するクラス

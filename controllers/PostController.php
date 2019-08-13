@@ -1,11 +1,11 @@
 <?php
 
-namespace Controllers;
+namespace controllers;
 
-use Core\Auth;
-use Core\Controller;
-use Core\Message;
-use Models\Post;
+use core\Auth;
+use core\Controller;
+use core\Message;
+use models\Post;
 
 /**
  * 投稿に関するコントローラ

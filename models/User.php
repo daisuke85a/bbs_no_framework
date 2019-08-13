@@ -2,7 +2,7 @@
 
 namespace models;
 
-use \Core\DB;
+use \core\DB;
 
 /**
  * ユーザーデータを管理するクラス

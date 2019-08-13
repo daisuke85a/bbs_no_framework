@@ -1,12 +1,12 @@
 <?php
 
-namespace Controllers;
+namespace controllers;
 
-use \Core\Auth;
-use \Core\Controller;
-use \Core\Message;
-use \Models\Post;
-use \Models\User;
+use \core\Auth;
+use \core\Controller;
+use \core\Message;
+use \models\Post;
+use \models\User;
 
 /**
  * ログイン/ログアウト/サインアップのコントローラ
